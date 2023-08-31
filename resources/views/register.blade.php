@@ -15,11 +15,13 @@
     </head>
 
     <body>
+        <!--container register-->
         @section('content')
         <div class="container-sm">
             <form action="{{ route('auth.register') }}" method="POST">
             @csrf
                 <div class="boton">
+                    <!--register-->
                     <h2 name="regis" id="regis">Registrarse</h2>
                     <br>
                 </div>

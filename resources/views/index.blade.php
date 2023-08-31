@@ -15,11 +15,13 @@
     </head>
 
     <body>
+        <!--container login-->
             @section('content')
         <div class="container-sm">
             <form action="{{ route('auth.authenticate') }}" method="POST">
                 @csrf
                     <div class="boton">
+                        <!--login-->
                         <h2 name="inicio" id="inicio">Inicio de sesiòn</h2>
                     </div>
                     <br>
