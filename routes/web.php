@@ -29,10 +29,12 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
+//master template
 Route::get('/master', function () {
     return view('all.father');
 });
 
+//central
 Route::get('/welcome', function () {
     return view('central');
 });

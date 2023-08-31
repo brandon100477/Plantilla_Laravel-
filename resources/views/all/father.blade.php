@@ -1,3 +1,4 @@
+<!-- master template of login and register -->
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -1,9 +1,12 @@
+
+/*all styles of the master "welcome" template*/
 body{
     background-image: url('../../img/welcome.jpg');
     background-attachment: fixed;
     background-size: cover;
     font-family: Arial, sans-serif;
     color:white;
+    font-family: 'Nunito', sans-serif;
 }
 
 .boton{

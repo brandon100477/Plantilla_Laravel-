@@ -1,26 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\hash;
 
+// authentication class to control login and registration
 class AuthController extends Controller
 
 {
+    //login redirect
     public function login()
     {
         return view('index');
     }
+    //register redirect
     public function register()
     {
         return view('register');
     }
 
     public function authenticate(Request $request)
+    //login validation and authentication
     {
+        
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -38,6 +43,7 @@ class AuthController extends Controller
     }
 
     public function store(Request $request){
+        // registration validation and authentication
         $validate = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
@@ -51,6 +57,7 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request)
+    //"Log out" function
     {
         Auth::logout();
 

@@ -1,3 +1,5 @@
+
+/*body styles*/
 body{
     background-image: url('../../img/background.jpg');
     background-attachment: fixed;
@@ -10,12 +12,14 @@ body{
     align-items: center;
     height: 95vh;
 }
+/*container button styles*/
 .boton{
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
+/*styles of the initial page form after login*/
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Dos columnas por fila */
