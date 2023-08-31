@@ -1,0 +1,12 @@
+// Para ver el logueo desde father:
+<select class="form-select" aria-label="Default select example">
+    <option selected>Abre este menú select</option>
+    <option value="1">Uno</option>
+    <option value="2">Dos</option>
+    <option value="3">Tres</option>
+</select>
+<a href="login">Regresar_Inicio_sesion</a>
+
+//Para ver father desde el logueo:
+
+<a href="/master">Regresar_father</a>

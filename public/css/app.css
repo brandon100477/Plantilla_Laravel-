@@ -1,0 +1,37 @@
+body{
+    background-image: url('../../img/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+.container-sm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+}
+.boton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas por fila */
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-label {
+    font-weight: bold;
+    
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

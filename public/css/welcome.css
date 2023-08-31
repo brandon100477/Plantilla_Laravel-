@@ -1,0 +1,15 @@
+body{
+    background-image: url('../../img/welcome.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color:white;
+}
+
+.boton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color:white;
+}
