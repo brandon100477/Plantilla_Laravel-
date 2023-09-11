@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('../../css/app.css')}}">
 
-        <title>Plantilla1</title>
+        <title>Iniciar sesión</title>
 
     </head>
 
@@ -44,7 +44,7 @@
                     <br>
                     <br>
                     <div class="boton">
-                        <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+                        <button class="btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
                     </div>
                     <br>
                     <p>¿Aùn no tienes una cuenta? puedes registrarse <a href="register">aquì</a></p>

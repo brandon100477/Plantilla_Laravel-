@@ -1,7 +1,7 @@
 
 /*all styles of the master "welcome" template*/
 body{
-    background-image: url('../../img/welcome.jpg');
+    background-image: url('../../img/fondo2.png');
     background-attachment: fixed;
     background-size: cover;
     font-family: Arial, sans-serif;
