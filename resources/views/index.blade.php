@@ -25,9 +25,9 @@
                         <h2 name="inicio" id="inicio">Inicio de sesiòn</h2>
                     </div>
                     <br>
-                    <h4 name="email" id="email">Email</h4>
-                    <input type="email" class=" form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="email" name="email" placeholder="example@example.com">
-                    @error('email')
+                    <h4 name="users" id="users">Usuario</h4>
+                    <input type="text" class=" form-control @error('usuario') is-invalid @enderror" value="{{ old('email') }}" id="email" name="email" placeholder="Usuario" required>
+                    @error('users')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -35,7 +35,7 @@
                     <br>
                     <br>
                     <h4 name="password" id="password">Password</h4>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="********">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="********" required>
                     @error('password')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -46,8 +46,6 @@
                     <div class="boton">
                         <button class="btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
                     </div>
-                    <br>
-                    <p>¿Aùn no tienes una cuenta? puedes registrarse <a href="register">aquì</a></p>
             </form>
         </div>
         @endsection

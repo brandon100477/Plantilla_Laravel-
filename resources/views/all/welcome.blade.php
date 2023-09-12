@@ -23,9 +23,6 @@
                 <a href="{{ url('/welcome') }}" class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenido</a>
         @else
             <a href="{{ route('login') }}" class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Iniciar sesión</a>
-        @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="navbar-brand ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Registrarse</a>
-        @endif
         @endauth
         @endif
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

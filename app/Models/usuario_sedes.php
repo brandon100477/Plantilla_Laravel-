@@ -1,5 +1,6 @@
 <?php
-
+//Este modelo es la conexión a la base de datos "Visitador_medico tabla: sedes_usuarios"
+//Lo administra "Visitador_medicoController"
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
