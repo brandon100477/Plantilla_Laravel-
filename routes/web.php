@@ -40,4 +40,5 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/formulario', "App\Http\Controllers\FormularioController@formulario2");
-    
+Route::get('/viaticos', "App\Http\Controllers\ViaticosController@concepto");
+Route::get('/visitadores', "App\Http\Controllers\Visitador_medicoController@formulario3");
