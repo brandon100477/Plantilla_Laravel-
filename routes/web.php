@@ -30,7 +30,7 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 //master template
-Route::get('/master', function () {
+Route::get('/master', function () { 
     return view('all.father');
 });
 
@@ -39,3 +39,5 @@ Route::get('/welcome', function () {
     return view('central');
 });
 
+Route::get('/formulario', "App\Http\Controllers\FormularioController@formulario2");
+    

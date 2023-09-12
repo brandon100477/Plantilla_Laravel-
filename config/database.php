@@ -63,7 +63,7 @@ return [
             ]) : [],
         ],
 
-        'formularios 1 y 2' => [
+        'formularios_1_y_2' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
