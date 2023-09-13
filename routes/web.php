@@ -19,15 +19,15 @@ Route::get('/', function () {
 })->middleware('auth');
 
 // inicio de sesión
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
+Route::get('/login', [Visitador_medicoController::class, 'login'])->name('login');
+Route::post('/login', [Visitador_medicoController::class, 'authenticate'])->name('auth.authenticate');
 
 // Registro
 Route::get('/register', [Visitador_medicoController::class, 'register'])->name('auth.register'); //aquí es donde llegan los datos del formulario "register.php" 
 Route::post('/register', [Visitador_medicoController::class, 'login_usuarios'])->name('auth.login_usuarios'); //aquí se redireccionan al controlador "Visitador_medicoController"
 
 // cierre de sesión
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('/logout', [Visitador_medicoController::class, 'logout'])->name('auth.logout');
 
 //master template
 Route::get('/master', function () { 

@@ -25,18 +25,18 @@
                         <h2 name="inicio" id="inicio">Inicio de sesiòn</h2>
                     </div>
                     <br>
-                    <h4 name="users" id="users">Usuario</h4>
-                    <input type="text" class=" form-control @error('usuario') is-invalid @enderror" value="{{ old('email') }}" id="email" name="email" placeholder="Usuario" required>
-                    @error('users')
+                    <h4 name="usuario" id="usuario">Usuario</h4>
+                    <input type="text" class=" form-control @error('usuario') is-invalid @enderror" value="{{ old('usuario') }}" id="usuario" name="usuario" placeholder="Usuario" required>
+                    @error('usuario')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                     <br>
                     <br>
-                    <h4 name="password" id="password">Password</h4>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="********" required>
-                    @error('password')
+                    <h4 name="contrasena" id="contrasena">Password</h4>
+                    <input type="password" class="form-control @error('contrasena') is-invalid @enderror" name="contrasena" id="contrasena" placeholder="********" required>
+                    @error('contrasena')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

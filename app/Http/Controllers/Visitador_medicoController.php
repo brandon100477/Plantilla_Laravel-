@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\{formulario3, login_usuarios, sedes, usuario_sedes};
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\hash;
 
     //Este controlador majena todas las tablas de la base de datos de "Visitador_medico"
     //Maneja el inicio y registro de medicos y administradores.
@@ -17,24 +18,17 @@ class Visitador_medicoController extends Controller
     public function authenticate(Request $request)
     //login validación y autenticación
     {
-        
-        $credentials = $request->validate([
-            'usuario' => ['required', 'usuario'],
-            'contrasena' => ['required'],
-        ]);
+        $usuario =login_usuarios::where('usuario', $request->usuario)->first();
 
-        if (Auth::attempt($credentials)) {
+        if (Hash::check($request->contrasena, $usuario->contrasena)) {
             $request->session()->regenerate();
-
+            Auth::login($usuario);
             return redirect()->intended('/welcome');
-        }
-
-        return back()->withErrors([
-            'usuario' => 'las credenciales no son correctas',
-            'contrasena' => 'las credenciales no son correctas',
-        ]);
     }
-
+    return back()->withErrors([
+        'usuario' => 'las credenciales no son correctas',        
+    ]);
+        }
 
 
     //funciones para que el registro a la tabla "login_usuarios" sea correcta.
@@ -47,7 +41,7 @@ class Visitador_medicoController extends Controller
         $registro = new login_usuarios();
         $registro -> nombreApellido = $request -> nombreApellido;
         $registro -> usuario = $request -> usuario;
-        $registro -> contrasena = $data['contrasena'] = Hash::make($request->contrasena); //Metodo para encriptar la contraseña por el metodo "Hash"
+        $registro -> contrasena = bcrypt($request->contrasena); //Metodo para encriptar la contraseña por el metodo "Hash"
         $registro -> cedula = $request -> cedula;
         $registro -> telefono = $request -> telefono;
         $registro -> correo = $request -> correo;
