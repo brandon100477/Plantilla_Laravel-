@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\hash;
     //Maneja el inicio y registro de medicos y administradores.
 class Visitador_medicoController extends Controller
 {
+    public function admin()
+    {
+        return view('index');
+    }
+    public function adminAuth(Request $request)
+    //login validación y autenticación
+    {
+                return view('admin.admin');
+
+        }
     public function login()
     {
         return view('index');
@@ -30,19 +40,21 @@ class Visitador_medicoController extends Controller
             $request->session()->put('accessToken', $token);
             
             $request->session()->regenerate();
-
-              //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
-            if($usuario =login_usuarios::where('tipoUsuario', 0)->first()){
+            
+            if(auth()->user()->tipoUsuario == '1'){
+                return redirect()->route('admin.admin');
+            }else{
                 return redirect()->intended('/medicos');
-
-            }else if($usuario =login_usuarios::where('tipoUsuario', 1)->first()){
-                return redirect()->intended('/administrar');
             }
+              //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
+
         }else{
             return back()->withErrors([
-                'usuario' => 'las credenciales no son correctas'
-            ]);
+                'usuario' => 'las credenciales no son correctas']);
         }
+        
+        
+       
         }
 
     //funciones para que el registro a la tabla "login_usuarios" sea correcta.
@@ -62,14 +74,9 @@ class Visitador_medicoController extends Controller
         $registro -> tipoUsuario = $request -> tipoUsuario;
         $registro ->save(); //Guarda todo el registro.
 
-        //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
-        if($usuario =login_usuarios::where('tipoUsuario', "0")->first()){
+        
             return redirect('/medicos');
-        }else if($usuario =login_usuarios::where('tipoUsuario', "1")->first()){
-            return redirect('/administrar');
-        }else{
-            return "el tipo de ususario no existe, recuerda. '0' para medicos y '1' para administradores.";
-        }
+
         //Redirecciona a la pagina principal "Tener en cuenta que para entrar al principal, se debe iniciar primero sesión, por ende primero le pedira su respectivo logueo"
     }
     public function sedes(){

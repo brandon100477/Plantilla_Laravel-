@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, Visitador_medicoController, formularioController, viaticosController};
+use App\Http\Controllers\{Visitador_medicoController, formularioController, viaticosController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,11 +34,10 @@ Route::get('/master', function () {
     return view('all.father');
 });
 
-//central o pagina principal
-Route::get('/administrar', function () {
-    return view('admin');
-})->middleware('auth'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
 
+Route::get('/administrar', [Visitador_medicoController::class, 'adminAuth'])->middleware('auth.admin') ->name('admin.admin'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
+
+//central o pagina principal
 Route::get('/medicos', function () {
     return view('medicos');
 })->middleware('auth');

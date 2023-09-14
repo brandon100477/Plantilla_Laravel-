@@ -20,7 +20,7 @@
   <div class="container-fluid">
         @if (Route::has('login'))
             @auth
-                <a href="{{ url('/welcome') }}" class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenido</a>
+                <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenido </a>
         @else
             <a href="{{ route('login') }}" class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Iniciar sesión</a>
         @endauth
