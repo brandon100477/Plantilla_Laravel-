@@ -18,30 +18,59 @@ Route::get('/', function () {
     return view('index');
 });
 
-// inicio de sesión
-Route::get('/login', [Visitador_medicoController::class, 'login'])->name('auth.authenticate');
-Route::post('/login', [Visitador_medicoController::class, 'authenticate'])->name('login');
+Route::controller(Visitador_medicoController::class)->group(function(){
+    // inicio de sesión
+    Route::get('/login', 'login')->name('auth.authenticate');
+    Route::post('/login', 'authenticate')->name('login');
 
-// Registro
-Route::get('/register', [Visitador_medicoController::class, 'register'])->name('auth.register'); //aquí es donde llegan los datos del formulario "register.php" 
-Route::post('/register', [Visitador_medicoController::class, 'login_usuarios'])->name('auth.login_usuarios'); //aquí se redireccionan al controlador "Visitador_medicoController"
+    //Inicio de sesión de administrador
+    Route::get('/administrar', 'adminAuth')->middleware('auth.admin') ->name('admin.admin'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
 
-// cierre de sesión
-Route::post('/logout', [Visitador_medicoController::class, 'logout'])->name('auth.logout');
+    // Registro
+    Route::get('/register', 'register')->name('auth.register'); //aquí es donde llegan los datos del formulario "register.php" 
+    Route::post('/register', 'login_usuarios')->name('auth.login_usuarios'); //aquí se redireccionan al controlador "Visitador_medicoController"
+
+    // cierre de sesión
+    Route::post('/logout', 'logout')->name('auth.logout');
+
+
+});
+
+
+//Ruta para el formulario de Doctores
+Route::post('medicos/tipo-de-formulario/Doctores', 'App\Http\Controllers\Visitador_medicoController@clasificacionformulario')->name('clasificacion'); //aquí es donde llegan los datos del formulario "register.php"
+Route::get('medicos/tipo-de-formulario/Doctores', [Visitador_medicoController::class, 'clasificacionformulario'])->name('clasificacion'); //aquí es donde llegan los datos del formulario "register.php"
+
 
 //master template
 Route::get('/master', function () { 
     return view('all.father');
 });
 
-
-Route::get('/administrar', [Visitador_medicoController::class, 'adminAuth'])->middleware('auth.admin') ->name('admin.admin'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
-
-//central o pagina principal
+//Rutas para los medicos:
 Route::get('/medicos', function () {
     return view('medicos');
 })->middleware('auth');
 
-Route::get('/formulario', "App\Http\Controllers\FormularioController@formulario2");
-Route::get('/viaticos', "App\Http\Controllers\ViaticosController@concepto");
-Route::get('/visitadores', "App\Http\Controllers\Visitador_medicoController@formulario3");
+//Ruta para Diligenciar formulario
+Route::get('medicos/tipo-de-formulario', function () {
+    return view('tipoFormulario');
+})->middleware('auth');
+
+
+
+//Ruta para el formulario de Instituciones
+Route::get('medicos/tipo-de-formulario/Instituciones', function () {
+    return view('Formularios.FormularioInstituciones');
+})->middleware('auth');
+
+//Ruta para el formulario de Centro Deportivo
+Route::get('medicos/tipo-de-formulario/Centro-Deportivo', function () {
+    return view('Formularios.FormularioCentroDeportivo');
+})->middleware('auth');
+
+
+//Ruta para ver los formularios registrados
+Route::get('medicos/formularios-registrados', function () {
+    return view('formulariosRegistrados');
+})->middleware('auth');

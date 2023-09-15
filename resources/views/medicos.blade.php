@@ -12,51 +12,27 @@
     </head>
 
     <body class="antialiased">
+        <form method="POST">
 
-<form action="#" method="post" class="container">
-    <div class="row g-3">
     <br>
-        <!--form spaces-->
-        <label class="form-label">Columna 1</label>
-        <input type="text" name="col1" class="form-input">
+<a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
 
-        <label class="form-label">Columna 2</label>
-        <input type="text" name="col2" class="form-input">
 
-        <label class="form-label">Columna 3</label>
-        <input type="text" name="col3" class="form-input">
+    <br><br> 
 
-        <label class="form-label">Columna 4</label>
-        <input type="text" name="col4" class="form-input">
+    <div class="col-md-12">
+        <div class="card">
+            <a href="medicos/tipo-de-formulario" id="butons">Diligenciar Formulario</a>
+        </div>
 
-        <label class="form-label">Columna 5</label>
-        <input type="text" name="col5" class="form-input">
+        <br><br><br><br>
 
-        <label class="form-label">Columna 6</label>
-        <input type="text" name="col6" class="form-input">
-
-        <label class="form-label">Columna 7</label>
-        <input type="text" name="col7" class="form-input">
-        
-        <label class="form-label">Columna 8</label>
-        <input type="text" name="col7" class="form-input">
-        
-        <label class="form-label">Columna 9</label>
-        <input type="text" name="col7" class="form-input">
-        
-        <label class="form-label">Columna 10</label>
-        <input type="text" name="col7" class="form-input">
-        
-        <label class="form-label">Columna 11</label>
-        <input type="text" name="col7" class="form-input">
-        
-        <label class="form-label">Columna 12</label>
-        <input type="text" name="col7" class="form-input">
-        
+        <div class="card">
+            <a href="medicos/formularios-registrados" id="butons">Ver formularios registrados</a>
+        </div>
     </div>
-    <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </div>
+</form>
+
 
 @endsection
 </body>

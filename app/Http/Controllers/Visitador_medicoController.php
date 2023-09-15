@@ -41,20 +41,17 @@ class Visitador_medicoController extends Controller
             
             $request->session()->regenerate();
             
+            //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
             if(auth()->user()->tipoUsuario == '1'){
                 return redirect()->route('admin.admin');
             }else{
                 return redirect()->intended('/medicos');
             }
-              //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
 
         }else{
             return back()->withErrors([
                 'usuario' => 'las credenciales no son correctas']);
         }
-        
-        
-       
         }
 
     //funciones para que el registro a la tabla "login_usuarios" sea correcta.
@@ -79,19 +76,13 @@ class Visitador_medicoController extends Controller
 
         //Redirecciona a la pagina principal "Tener en cuenta que para entrar al principal, se debe iniciar primero sesión, por ende primero le pedira su respectivo logueo"
     }
-    public function sedes(){
-        return sedes ::all();
-    }
-    public function usuario_sedes(){
-        return usuario_sedes ::all();
-    }
 
     public function formulario3(){
         return formulario3 ::all();
     }
 
     public function logout(Request $request)
-    //"Log out" function
+    //Función de cerrar sesión
     {
         Auth::logout();
 
@@ -101,5 +92,47 @@ class Visitador_medicoController extends Controller
 
         return redirect('/login');
     }
-
+    public function formulario(Request $request)
+    {
+        $accion = $request->input('accion');
+        $contenido = "";
+        if ($accion === 'boton1') {
+            $contenido = "Doctores";
+            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
+        } elseif ($accion === 'boton2') {
+            $contenido = "Instituciones";
+            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
+        }elseif ($accion === 'boton3') {
+            $contenido = "Centro Deportivo";
+            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
+    
+        
+        
+    }else{
+        return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido
+    
 }
+    }
+    public function clasificacionformulario(Request $request){
+
+        $accion = $request->input('accion1');
+        $contenido = "";
+        if ($accion === 'boton1') {
+            $contenido = "Doctores";
+            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
+        } elseif ($accion === 'boton2') {
+            $contenido = "Instituciones";
+            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
+        }elseif ($accion === 'boton3') {
+            $contenido = "Centro Deportivo";
+            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
+
+
+    }else{
+        return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido   
+}
+
+    }
+}
+
+
