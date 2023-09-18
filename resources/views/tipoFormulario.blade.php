@@ -7,6 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
     <title>tipo de formulario</title>
+    <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
     </head>
 <body>
 <!---->

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\{formulario3, login_usuarios, sedes, usuario_sedes};
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, hash};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\hash;
-
 
     //Este controlador majena todas las tablas de la base de datos de "Visitador_medico"
     //Maneja el inicio y registro de medicos y administradores.
@@ -77,10 +75,6 @@ class Visitador_medicoController extends Controller
         //Redirecciona a la pagina principal "Tener en cuenta que para entrar al principal, se debe iniciar primero sesión, por ende primero le pedira su respectivo logueo"
     }
 
-    public function formulario3(){
-        return formulario3 ::all();
-    }
-
     public function logout(Request $request)
     //Función de cerrar sesión
     {
@@ -114,6 +108,45 @@ class Visitador_medicoController extends Controller
 }
 
     }
+
+    //Gestión para insertar al formulario3 de la DB
+    public function formulario3(Request $request){
+
+        $id=auth()->user()->id; //Representa la obtención del ID del usuario que está iniciando sesión
+        $agregar = new formulario3();
+        //Parte: Actualización de datos
+        $agregar -> nombre = $request -> nombre;
+        $agregar -> especialidad = $request -> especialidad;
+        $agregar -> telefono = $request -> telefono;
+        $agregar -> direccion = $request -> direccion;
+        $agregar -> ciudad = $request -> ciudad;
+        //Parte: IPS donde trabaja
+        $agregar -> secretaria = $request -> secretaria;
+        $agregar -> tel_ayuda = $request -> tel_ayuda;
+        $agregar -> ips_consulta = $request -> ips_consulta;
+        $agregar -> ips_cirugia = $request -> ips_cirugia;
+        //Parte: Preguntas de indagación 1
+        $agregar -> preg_indag1 = $request -> preg_indag1;
+        $agregar -> preg_indag2 = $request -> preg_indag2;
+        $agregar -> preg_indag3 = $request -> preg_indag3;
+        $agregar -> preg_indag4 = $request -> preg_indag4;
+        $agregar -> preg_indag5 = $request -> preg_indag5;
+        $agregar -> preg_indag6 = $request -> preg_indag6;
+        $agregar -> preg_indag7 = $request -> preg_indag7;
+        //Parte: Preguntas de indagación 2
+        $agregar -> preg_indag8 = $request -> preg_indag8;
+        $agregar -> preg_indag9 = $request -> preg_indag9;
+        $agregar -> preg_indag10 = $request -> preg_indag10;
+        $agregar -> preg_indag11 = $request -> preg_indag11;
+        $agregar -> preg_indag12 = $request -> preg_indag12;
+        $agregar -> sesion_usuario = $id;
+        $agregar -> categoria = "0";
+        $agregar -> save();
+        return view('tipoFormulario');
+
+    }
+
+
 }
 
 

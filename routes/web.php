@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::controller(Visitador_medicoController::class)->group(function(){
+
     // inicio de sesión
     Route::get('/login', 'login')->name('auth.authenticate');
     Route::post('/login', 'authenticate')->name('login');
@@ -37,6 +38,9 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::post('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
     Route::get('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
 
+    //Ruta para insertar los datos al formulario.
+    Route::post('medicos/tipo-de-formulario','formulario3')->name('insertar');
+    Route::get('medicos/tipo-de-formulario','formulario3')->name('insertar');
 
 
 });
@@ -51,10 +55,20 @@ Route::get('/medicos', function () {
     return view('medicos');
 })->middleware('auth');
 
+//Ruta para regresar a la vista de medicos:
+Route::get('/medicos', function () {
+    return view('medicos');
+})->middleware('auth')->name('volver1');
+
 //Ruta para Diligenciar formulario
 Route::get('medicos/tipo-de-formulario', function () {
     return view('tipoFormulario');
 })->middleware('auth');
+
+//Ruta para regresar a la vista de tipo de formulario (doctores - instituciones - centro deportivo):
+Route::get('medicos/tipo-de-formulario', function () {
+    return view('tipoFormulario');
+})->middleware('auth')->name('volver');
 
 
 //Ruta para ver los formularios registrados
