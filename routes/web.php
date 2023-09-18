@@ -33,14 +33,13 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     // cierre de sesión
     Route::post('/logout', 'logout')->name('auth.logout');
 
+    //Ruta para el formulario de Doctores
+    Route::post('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
+    Route::get('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
+
+
 
 });
-
-
-//Ruta para el formulario de Doctores
-Route::post('medicos/tipo-de-formulario/Doctores', 'App\Http\Controllers\Visitador_medicoController@clasificacionformulario')->name('clasificacion'); //aquí es donde llegan los datos del formulario "register.php"
-Route::get('medicos/tipo-de-formulario/Doctores', [Visitador_medicoController::class, 'clasificacionformulario'])->name('clasificacion'); //aquí es donde llegan los datos del formulario "register.php"
-
 
 //master template
 Route::get('/master', function () { 
@@ -55,18 +54,6 @@ Route::get('/medicos', function () {
 //Ruta para Diligenciar formulario
 Route::get('medicos/tipo-de-formulario', function () {
     return view('tipoFormulario');
-})->middleware('auth');
-
-
-
-//Ruta para el formulario de Instituciones
-Route::get('medicos/tipo-de-formulario/Instituciones', function () {
-    return view('Formularios.FormularioInstituciones');
-})->middleware('auth');
-
-//Ruta para el formulario de Centro Deportivo
-Route::get('medicos/tipo-de-formulario/Centro-Deportivo', function () {
-    return view('Formularios.FormularioCentroDeportivo');
 })->middleware('auth');
 
 

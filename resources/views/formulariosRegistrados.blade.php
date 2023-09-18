@@ -9,6 +9,7 @@
     <title>Formularios Registrados</title>
 </head>
 <body>
+    Aquí se veran los registros de los formularios
     
 </body>
 </html>

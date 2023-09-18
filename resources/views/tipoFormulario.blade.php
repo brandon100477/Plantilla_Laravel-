@@ -9,36 +9,41 @@
     <title>tipo de formulario</title>
     </head>
 <body>
-<form method="POST">
-
+<!---->
     <br>
 
     <h2 id="h2">Seleccione la categoria de formulario que desea diligenciar</h2>
 
     <br><br>
 
-
-
-    <form action="{{ route('clasificacion') }}" method="GET">
+    <form method="post" action="{{ route('clasificacion') }}">
     @csrf
-    <input type="submit" name="accion1" value="Doctores">
-    </form>
-<!---->
-        <a href="{{ route('clasificacion') }}" name="accion" value="boton1" id="boton" >Doctores</a>   
-    <br><br>
+        <input name="tipo" id="tipo" type="hidden" value="tipo">
+        <button type="submit" >Doctores</button>
 
-    <input type="hidden" name="accion" value="boton2">
-    <div class="card">
-            <a name="accion" value="boton1" id="boton2" href="tipo-de-formulario/Instituciones" id="butons">Instituciones</a>
-        </div>
 
-    <br><br>
-    <input type="hidden" name="accion" value="boton3">
-    <div class="card">
-            <a name="accion" value="boton1" id="boton3" href="tipo-de-formulario/Centro-Deportivo" id="butons">Centro Deportivo</a>
-        </div>
-        <br><br>
+
+        <br>
+
+
     </form>
+
+    <form method="post" action="{{ route('clasificacion') }}">
+    @csrf
+        <input name="tipo" id="tipo" type="hidden" value="tipo2">
+        <button type="submit" >Instituciones</button>
+
+    </form>
+    <br>
+
+    <form method="post" action="{{ route('clasificacion') }}">
+    @csrf
+        <input name="tipo" id="tipo" type="hidden" value="tipo3">
+        <button type="submit" >Centro Deportivo</button>
+
+    </form>
+    <br>
+
 
 </body>
 </html>

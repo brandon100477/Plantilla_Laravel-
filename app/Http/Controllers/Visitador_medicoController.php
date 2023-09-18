@@ -32,7 +32,7 @@ class Visitador_medicoController extends Controller
         $usuario =login_usuarios::where('usuario', $request->usuario)->first();
 
         if (Hash::check($request->contrasena, $usuario->contrasena)) {
-            //dd(Auth::user());
+            
 
             // Obtener el token de acceso del usuario
             $token = auth()->login($usuario);
@@ -92,40 +92,21 @@ class Visitador_medicoController extends Controller
 
         return redirect('/login');
     }
-    public function formulario(Request $request)
-    {
-        $accion = $request->input('accion');
-        $contenido = "";
-        if ($accion === 'boton1') {
-            $contenido = "Doctores";
-            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
-        } elseif ($accion === 'boton2') {
-            $contenido = "Instituciones";
-            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
-        }elseif ($accion === 'boton3') {
-            $contenido = "Centro Deportivo";
-            return view('Formularios.FormularioDoctores', ['contenido' => $contenido]);
-    
-        
-        
-    }else{
-        return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido
-    
-}
-    }
+
+    //controlador para filtrar el tipo de formulario para agregar (Entre doctores - Instituciones -Centro deportivo)
     public function clasificacionformulario(Request $request){
 
-        $accion = $request->input('accion1');
+        $accion = $request->input('tipo');
         $contenido = "";
-        if ($accion === 'boton1') {
+        if ($accion === 'tipo') {
             $contenido = "Doctores";
-            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
-        } elseif ($accion === 'boton2') {
+            return view('Formularios.Formulario')->with('contenido', $contenido);
+        } elseif ($accion === 'tipo2') {
             $contenido = "Instituciones";
-            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
-        }elseif ($accion === 'boton3') {
+            return view('Formularios.Formulario')->with('contenido', $contenido);
+        }elseif ($accion === 'tipo3') {
             $contenido = "Centro Deportivo";
-            return to_route('Formularios.FormularioDoctores')->with('contenido', $contenido);
+            return view('Formularios.Formulario')->with('contenido', $contenido);
 
 
     }else{

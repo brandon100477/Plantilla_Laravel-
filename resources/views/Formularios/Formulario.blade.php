@@ -7,13 +7,12 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-        <title>Doctores</title>
+        <title>{{ $contenido }}</title>
 </head>
 <body>
- 
-@if(isset($contenido))
+
     <h1>{{ $contenido }}</h1>
-@endif
+
 
 </body>
 </html>
