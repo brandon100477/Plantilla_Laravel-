@@ -28,7 +28,7 @@
         <br><br><br><br>
 
         <div class="card">
-            <a href="medicos/formularios-registrados" id="butons">Ver formularios registrados</a>
+            <a href="{{ route('registrados') }}" id="butons">Ver formularios registrados</a>
         </div>
     </div>
 </form>

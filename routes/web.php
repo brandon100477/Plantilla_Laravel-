@@ -42,8 +42,24 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::post('medicos/tipo-de-formulario','formulario3')->name('insertar');
     Route::get('medicos/tipo-de-formulario','formulario3')->name('insertar');
 
+    //Ruta para ver los formularios registrados
+    Route::get('medicos/formularios-registrados', 'tabla')->name('registrados');
+
+
 
 });
+
+
+
+/* Route::get('medicos/formularios-registrados', function () {
+    return view('formulariosRegistrados');
+})->middleware('auth'); */
+
+
+
+
+
+
 
 //master template
 Route::get('/master', function () { 
@@ -71,7 +87,3 @@ Route::get('medicos/tipo-de-formulario', function () {
 })->middleware('auth')->name('volver');
 
 
-//Ruta para ver los formularios registrados
-Route::get('medicos/formularios-registrados', function () {
-    return view('formulariosRegistrados');
-})->middleware('auth');

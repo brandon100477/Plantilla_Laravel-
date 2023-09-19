@@ -140,13 +140,28 @@ class Visitador_medicoController extends Controller
         $agregar -> preg_indag11 = $request -> preg_indag11;
         $agregar -> preg_indag12 = $request -> preg_indag12;
         $agregar -> sesion_usuario = $id;
-        $agregar -> categoria = "0";
+        $agregar -> categoria = $request ->select;
         $agregar -> save();
         return view('tipoFormulario');
 
     }
 
+    public function tabla(Request $request)
+    {
 
+        $filtro_nombre =$request->get('documento_campo');
+        $filtro_ciudad =$request->get('ciudad_campo');
+        $filtro_especialidad =$request->get('especialidad_campo');
+        $filtro_select = $request->get('select');
+        $datos = formulario3::orderBy('id', 'ASC')
+                            ->where('nombre','like', '%'.$filtro_nombre.'%')
+                            ->where('ciudad','like', '%'.$filtro_ciudad.'%')
+                            ->where('especialidad','like', '%'.$filtro_especialidad.'%')
+                            ->where('categoria','like', '%'.$filtro_select.'%')
+                            ->where('sesion_usuario','=', auth()->user()->id)
+                            ->get();
+        return view('formulariosRegistrados', compact('datos', 'filtro_nombre',  'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
+    }
 }
 
 

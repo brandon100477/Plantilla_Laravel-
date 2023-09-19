@@ -34,6 +34,13 @@
 
         <div class="accordion_content">
         <br>
+        <select id="select" name="select" class="select" onchange="actualizar(this)">	
+                    <option selected readonly>Seleccione una categoria</option>
+                    <option value="2">Medicos</option>
+                    <option value="3">Instituciones</option>
+                    <option value="4">Centro deportivo</option>
+                </select><br><br><br>
+
             <label for="texto" class="textos">1. Nombre </label><br><br>
         		<input type="text" class="campo_texto" name="nombre" id="nombre" placeholder="Escriba su respuesta"><br><br><br>
 
