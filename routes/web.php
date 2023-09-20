@@ -32,33 +32,23 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::post('/register', 'login_usuarios')->name('auth.login_usuarios'); //aquí se redireccionan al controlador "Visitador_medicoController"
 
     // cierre de sesión
-    Route::post('/logout', 'logout')->name('auth.logout');
+    Route::post('/logout', 'logout')->name('auth.logout')->middleware('auth');
 
     //Ruta para el formulario de Doctores
-    Route::post('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
-    Route::get('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion');
+    Route::post('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion')->middleware('auth');
+    Route::get('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion')->middleware('auth');
 
     //Ruta para insertar los datos al formulario.
-    Route::post('medicos/tipo-de-formulario','formulario3')->name('insertar');
-    Route::get('medicos/tipo-de-formulario','formulario3')->name('insertar');
+    Route::post('medicos/tipo-de-formulario','formulario3')->name('insertar')->middleware('auth');
+    Route::get('medicos/tipo-de-formulario','formulario3')->name('insertar')->middleware('auth');
 
     //Ruta para ver los formularios registrados
-    Route::get('medicos/formularios-registrados', 'tabla')->name('registrados');
+    Route::get('medicos/formularios-registrados', 'tabla')->name('registrados')->middleware('auth');
 
-
+    //Ruta para actualizar los formularios registrados
+    Route::get('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
 
 });
-
-
-
-/* Route::get('medicos/formularios-registrados', function () {
-    return view('formulariosRegistrados');
-})->middleware('auth'); */
-
-
-
-
-
 
 
 //master template
@@ -85,5 +75,8 @@ Route::get('medicos/tipo-de-formulario', function () {
 Route::get('medicos/tipo-de-formulario', function () {
     return view('tipoFormulario');
 })->middleware('auth')->name('volver');
+
+
+
 
 

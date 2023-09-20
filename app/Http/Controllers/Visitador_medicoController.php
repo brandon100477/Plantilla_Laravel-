@@ -148,7 +148,7 @@ class Visitador_medicoController extends Controller
 
     public function tabla(Request $request)
     {
-
+       
         $filtro_nombre =$request->get('documento_campo');
         $filtro_ciudad =$request->get('ciudad_campo');
         $filtro_especialidad =$request->get('especialidad_campo');
@@ -159,8 +159,19 @@ class Visitador_medicoController extends Controller
                             ->where('especialidad','like', '%'.$filtro_especialidad.'%')
                             ->where('categoria','like', '%'.$filtro_select.'%')
                             ->where('sesion_usuario','=', auth()->user()->id)
-                            ->get();
+                            /*->paginate(15)*/
+                            ->get() ;
+
+        $descargar = $request->input('boton_excel');
+
+
         return view('formulariosRegistrados', compact('datos', 'filtro_nombre',  'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
+    }
+
+    public function tabla_actualizar(){
+
+
+        return view('actualizar_datos_registrados');
     }
 }
 

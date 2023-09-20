@@ -6,6 +6,7 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
+        <link src="../js/formulariosRegistrados.js">
     <title>Formularios Registrados</title>
 
     <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
@@ -102,7 +103,7 @@
         <td>{{ $dato->telefono }}</td>
         <td>{{ $dato->direccion }}</td>
         <td>{{ $dato->ciudad }}</td>
-        <td><a href ="descripcion_suceso.php" id="boton_melo" class="boton_melo" name="butons">Actualizar</a></td>
+        <td><a href ="{{route('actualizar')}}" id="boton_melo" class="boton_melo" name="butons">Actualizar</a></td>
         <td>
 
             <form id="eliminarForm_" method="post">
@@ -126,7 +127,7 @@
 
 <div class="titulo1">
 
-<input type="button" value="Descargar Excel" class="btn btn-warning btn-sm" id="boton_excel">
+<input href="{{ route('registrados')}}" name="boton_excel" type="button" value="Descargar Excel" class="btn btn-warning btn-sm" id="boton_excel">
 
 </div>
 
