@@ -83,9 +83,9 @@
                 <br>
                 <br>
 
-                    <div class="boton">
-                        <button class="btn btn-lg btn-primary" type="submit" name="button1" id="button1">Registrarse</button>
-                    </div>
+                <div class="boton">
+                    <button class="btn btn-lg btn-primary" type="submit" name="button1" id="button1">Registrarse</button>
+                </div>
             </form>
         </div>
         <br>

@@ -10,11 +10,11 @@
         <title>{{ $contenido }}</title>
         <a href="{{ route('volver')}}" class="cerrar" id="cerrar">Volver</a>
 </head>
-<body>
+    <body>
     <section class="inicio">
         <h1>{{ $contenido }}</h1>
         </section>
-    
+
     <section class="form-register" id="form-register">
 
         <form method="POST" action="{{ route('insertar') }}">
@@ -42,20 +42,19 @@
                 </select><br><br><br>
 
             <label for="texto" class="textos">1. Nombre </label><br><br>
-        		<input type="text" class="campo_texto" name="nombre" id="nombre" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="text" class="campo_texto" name="nombre" id="nombre" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">2. Especialidad </label><br><br>
-        		<input type="text" class="campo_texto" name="especialidad" id="especialidad" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="text" class="campo_texto" name="especialidad" id="especialidad" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">3. Telefono </label><br><br>
-        		<input type="number" class="campo_texto" name="telefono" id="telefono" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="number" class="campo_texto" name="telefono" id="telefono" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">4. Direccion </label><br><br>
-        		<input type="text" class="campo_texto" name="direccion" id="direccion" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="text" class="campo_texto" name="direccion" id="direccion" placeholder="Escriba su respuesta"><br><br><br>
 
-							
-			<label for="texto" class="textos">5. Ciudad </label><br><br>
-        		<input type="text" class="campo_texto" name="ciudad" id="ciudad" placeholder="Escriba su respuesta"><br><br>
+            <label for="texto" class="textos">5. Ciudad </label><br><br>
+                <input type="text" class="campo_texto" name="ciudad" id="ciudad" placeholder="Escriba su respuesta"><br><br>
 
         </div>
         </div>
@@ -78,16 +77,16 @@
         <br>
 
             <label for="texto" class="textos">6. Secretaria o contacto de ayuda </label><br><br>
-        		<input type="text" class="campo_texto" name="secretaria" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="text" class="campo_texto" name="secretaria" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">7. Telefono de contacto de ayuda </label><br><br>
-        		<input type="number" class="campo_texto" name="tel_ayuda" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="number" class="campo_texto" name="tel_ayuda" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">8. IPS de consulta </label><br><br>
-        		<input type="text" class="campo_texto" name="ips_consulta" placeholder="Escriba su respuesta"><br><br><br>
+                <input type="text" class="campo_texto" name="ips_consulta" placeholder="Escriba su respuesta"><br><br><br>
 
             <label for="texto" class="textos">9. IPS de cirugia </label><br><br>
-        		<input type="text" class="campo_texto" name="ips_cirugia" placeholder="Escriba su respuesta"><br><br>
+                <input type="text" class="campo_texto" name="ips_cirugia" placeholder="Escriba su respuesta"><br><br>
 
         </div>
 
@@ -114,26 +113,26 @@
 
 
             <label for="texto" class="textos">11. ¿Considera que en ________, somos oportunos con el Agendamiento de las citas para sus pacientes?  </label><br><br>        					
-				<textarea name="preg_indag2" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag2" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
             <label for="texto" class="textos">12. ¿Cree usted que nuestros resultados son confiables y determinantes para la definición del diagnóstico de sus pacientes?</label><br><br>					
-				<textarea name="preg_indag3" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
-			
+                <textarea name="preg_indag3" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+            
 
             <label for="texto" class="textos">13. ¿que piensa de la calidad de la imagen que usted recibe, está de acuerdo con los protocolos solicitados?</label><br><br>
-				<textarea name="preg_indag4" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
-			
+                <textarea name="preg_indag4" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+            
 
             <label for="texto" class="textos">14. ¿Esta de acuerdo con el tiempo de entrega de los resultados que entregamos a sus pacientes? </label><br><br>
-        		<textarea name="preg_indag5" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag5" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
 
             <label for="texto" class="textos">15. ¿Sabe usar nuestra plataforma, para ver los resultados e imágenes de sus pacientes? </label><br><br>
-        		<textarea name="preg_indag6" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag6" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
 
             <label for="texto" class="textos">16. ¿Cuantos procedimientos de apoyo diagnóstico ordena en el mes? Más de 5 más de 10 </label><br><br>
-        		<textarea name="preg_indag7" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag7" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
                 <br><br><br>
 
         </div>
@@ -156,19 +155,19 @@
         <br>
 
             <label for="texto" class="textos">17. ¿Que cosas positivas ha encontrado en el proceso de toma de imagenes?</label><br><br>
-        		<textarea name="preg_indag8" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag8" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
             <label for="texto" class="textos">18. ¿Durante este mes ha tenido alguna situación desafortunada con algún paciente que haya tomado nuestros servicios?</label><br><br>
-        		<textarea name="preg_indag9" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag9" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
             <label for="texto" class="textos">19. ¿Que ayudas diagnosticas cree que se necesita en la ciudad?</label><br><br>
-				<textarea name="preg_indag10" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag10" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
             <label for="texto" class="textos">20. ¿Conoce alguna Tecnica que podemos innovar?</label><br><br>
-				<textarea name="preg_indag11" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag11" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
             <label for="texto" class="textos">21. ¿En Imagenologia que capacitación quisiera tener?</label><br><br>
-				<textarea name="preg_indag12" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+                <textarea name="preg_indag12" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
 
         </div>
     </div>
@@ -402,5 +401,5 @@
         </form>
     </section>
 
-</body>
-</html>
+    </body>
+    </html>

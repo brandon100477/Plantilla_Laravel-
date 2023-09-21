@@ -17,9 +17,9 @@ class Visitador_medicoController extends Controller
     public function adminAuth(Request $request)
     //login validación y autenticación
     {
-                return view('admin.admin');
+        return view('admin.admin');
 
-        }
+    }
     public function login()
     {
         return view('index');
@@ -31,26 +31,21 @@ class Visitador_medicoController extends Controller
 
         if (Hash::check($request->contrasena, $usuario->contrasena)) {
             
-
             // Obtener el token de acceso del usuario
             $token = auth()->login($usuario);
             // Almacenar el token de acceso en la sesión del usuario
             $request->session()->put('accessToken', $token);
-            
             $request->session()->regenerate();
-            
             //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
             if(auth()->user()->tipoUsuario == '1'){
                 return redirect()->route('admin.admin');
             }else{
                 return redirect()->intended('/medicos');
             }
-
         }else{
-            return back()->withErrors([
-                'usuario' => 'las credenciales no son correctas']);
+            return back()->withErrors(['usuario' => 'las credenciales no son correctas']);
         }
-        }
+    }
 
     //funciones para que el registro a la tabla "login_usuarios" sea correcta.
     public function register()
@@ -58,7 +53,6 @@ class Visitador_medicoController extends Controller
         return view('register');
     }
     public function login_usuarios(Request $request){
-
         $registro = new login_usuarios();
         $registro -> nombreApellido = $request -> nombreApellido;
         $registro -> usuario = $request -> usuario;
@@ -69,9 +63,7 @@ class Visitador_medicoController extends Controller
         $registro -> tipoUsuario = $request -> tipoUsuario;
         $registro ->save(); //Guarda todo el registro.
 
-        
-            return redirect('/medicos');
-
+        return redirect('/medicos');
         //Redirecciona a la pagina principal "Tener en cuenta que para entrar al principal, se debe iniciar primero sesión, por ende primero le pedira su respectivo logueo"
     }
 
@@ -79,17 +71,13 @@ class Visitador_medicoController extends Controller
     //Función de cerrar sesión
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 
     //controlador para filtrar el tipo de formulario para agregar (Entre doctores - Instituciones -Centro deportivo)
     public function clasificacionformulario(Request $request){
-
         $accion = $request->input('tipo');
         $contenido = "";
         if ($accion === 'tipo') {
@@ -101,17 +89,13 @@ class Visitador_medicoController extends Controller
         }elseif ($accion === 'tipo3') {
             $contenido = "Centro Deportivo";
             return view('Formularios.Formulario')->with('contenido', $contenido);
-
-
-    }else{
-        return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido   
-}
-
+        }else{
+            return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido   
+        }
     }
 
     //Gestión para insertar al formulario3 de la DB
     public function formulario3(Request $request){
-
         $id=auth()->user()->id; //Representa la obtención del ID del usuario que está iniciando sesión
         $agregar = new formulario3();
         //Parte: Actualización de datos
@@ -143,12 +127,10 @@ class Visitador_medicoController extends Controller
         $agregar -> categoria = $request ->select;
         $agregar -> save();
         return view('tipoFormulario');
-
     }
 
     public function tabla(Request $request)
     {
-       
         $filtro_nombre =$request->get('documento_campo');
         $filtro_ciudad =$request->get('ciudad_campo');
         $filtro_especialidad =$request->get('especialidad_campo');
@@ -161,16 +143,10 @@ class Visitador_medicoController extends Controller
                             ->where('sesion_usuario','=', auth()->user()->id)
                             /*->paginate(15)*/
                             ->get() ;
-
         $descargar = $request->input('boton_excel');
-
-
         return view('formulariosRegistrados', compact('datos', 'filtro_nombre',  'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
     }
-
     public function tabla_actualizar(){
-
-
         return view('actualizar_datos_registrados');
     }
 }

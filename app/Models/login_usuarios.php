@@ -16,7 +16,6 @@ class login_usuarios extends Authenticatable
     protected $table ="login_usuarios"; //nombre de la tabla
     protected $primaryKey = "id"; //columna de la llave primaria
     
-
     protected $hidden = [
         'contrasena'
     ];

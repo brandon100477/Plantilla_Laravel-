@@ -13,27 +13,22 @@
 
     <body class="antialiased">
         <form method="POST">
+        <br>
+            <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
+        <br><br>
 
-    <br>
-<a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
-
-
-    <br><br> 
-
-    <div class="col-md-12">
-        <div class="card">
-            <a href="medicos/tipo-de-formulario" id="butons">Diligenciar Formulario</a>
-        </div>
-
+            <div class="col-md-12">
+                <div class="card">
+                    <!--Boton para registrar un nuevo formulario.-->
+                    <a href="medicos/tipo-de-formulario" id="butons">Diligenciar Formulario</a>
+                </div>
         <br><br><br><br>
-
-        <div class="card">
-            <a href="{{ route('registrados') }}" id="butons">Ver formularios registrados</a>
-        </div>
-    </div>
-</form>
-
-
+                <div class="card">
+                    <!--Boton para ver los registros hasta el momento.-->
+                    <a href="{{ route('registrados') }}" id="butons">Ver formularios registrados</a>
+                </div>
+            </div>
+        </form>
 @endsection
-</body>
+    </body>
 </html>

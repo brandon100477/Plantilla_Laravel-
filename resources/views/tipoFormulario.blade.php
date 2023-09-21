@@ -10,7 +10,7 @@
     <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
     </head>
 <body>
-<!---->
+
     <br>
 
     <h2 id="h2">Seleccione la categoria de formulario que desea diligenciar</h2>
@@ -19,21 +19,16 @@
 
     <form method="post" action="{{ route('clasificacion') }}">
     @csrf
+    <!--Clasificación para elegir donde será registrado el paciente-->
         <input name="tipo" id="tipo" type="hidden" value="tipo">
         <button type="submit" >Doctores</button>
-
-
-
         <br>
-
-
     </form>
 
     <form method="post" action="{{ route('clasificacion') }}">
     @csrf
         <input name="tipo" id="tipo" type="hidden" value="tipo2">
         <button type="submit" >Instituciones</button>
-
     </form>
     <br>
 
@@ -41,10 +36,8 @@
     @csrf
         <input name="tipo" id="tipo" type="hidden" value="tipo3">
         <button type="submit" >Centro Deportivo</button>
-
     </form>
     <br>
-
 
 </body>
 </html>
