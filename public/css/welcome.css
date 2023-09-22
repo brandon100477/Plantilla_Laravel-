@@ -5,7 +5,7 @@ body{
     background-attachment: fixed;
     background-size: cover;
     font-family: Arial, sans-serif;
-    color:white;
+    color:rgb(0, 0, 0);
     font-family: 'Nunito', sans-serif;
 }
 
@@ -14,5 +14,5 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    color:white;
+    color:rgb(0, 0, 0);
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\{formulario3, login_usuarios, sedes, usuario_sedes};
 use Illuminate\Support\Facades\{Auth, hash};
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
     //Este controlador majena todas las tablas de la base de datos de "Visitador_medico"
     //Maneja el inicio y registro de medicos y administradores.
@@ -17,7 +20,10 @@ class Visitador_medicoController extends Controller
     public function adminAuth(Request $request)
     //login validación y autenticación
     {
-        return view('admin.admin');
+        $datos = login_usuarios::all();
+
+        return view('admin.admin')->with('datos', $datos);
+
 
     }
     public function login()
@@ -27,6 +33,7 @@ class Visitador_medicoController extends Controller
     public function authenticate(Request $request)
     //login validación y autenticación
     {
+        
         $usuario =login_usuarios::where('usuario', $request->usuario)->first();
 
         if (Hash::check($request->contrasena, $usuario->contrasena)) {
@@ -38,7 +45,7 @@ class Visitador_medicoController extends Controller
             $request->session()->regenerate();
             //Sentencia para saber si es administrador o medico y llevarlos a la vista correspondiente.
             if(auth()->user()->tipoUsuario == '1'){
-                return redirect()->route('admin.admin');
+                return redirect()->intended('/administrar');
             }else{
                 return redirect()->intended('/medicos');
             }
@@ -143,12 +150,83 @@ class Visitador_medicoController extends Controller
                             ->where('sesion_usuario','=', auth()->user()->id)
                             /*->paginate(15)*/
                             ->get() ;
-        $descargar = $request->input('boton_excel');
         return view('formulariosRegistrados', compact('datos', 'filtro_nombre',  'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
+        
     }
     public function tabla_actualizar(){
         return view('actualizar_datos_registrados');
     }
+
+    public function exportar_excel(Request $request)
+{
+    // Valida los datos de entrada
+
+    // Filtra los datos según el nombre
+
+    // Obtenemos los datos de la base de datos
+    $datos = formulario3::orderBy('id', 'ASC')
+        ->where('nombre', 'like', '%' . $request->get('documento_campo') . '%')
+        ->where('ciudad', 'like', '%' . $request->get('ciudad_campo') . '%')
+        ->where('especialidad', 'like', '%' . $request->get('especialidad_campo') . '%')
+        ->where('categoria', 'like', '%' . $request->get('select') . '%')
+        ->where('sesion_usuario', '=', auth()->user()->id)
+        ->get();
+
+    // Crea una nueva hoja de cálculo
+    $spreadsheet = new Spreadsheet();
+
+    // Agrega los encabezados de las columnas
+    $spreadsheet->getActiveSheet()->setCellValue('A1', 'Nombre');
+    $spreadsheet->getActiveSheet()->setCellValue('B1', 'Especialidad');
+    $spreadsheet->getActiveSheet()->setCellValue('C1', 'Teléfono');
+    $spreadsheet->getActiveSheet()->setCellValue('D1', 'Dirección');
+    $spreadsheet->getActiveSheet()->setCellValue('E1', 'Ciudad');
+
+    $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+    $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+    $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+    $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+    $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
+
+    // Centrar los encabezados
+    $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    // Negrita
+    $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
+    // Tamaño personalizado
+    $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setSize(15);
+
+    $i=2;
+    // Recorre los datos y los escribe en la hoja de cálculo
+    foreach ($datos as $dato) {
+        
+        $spreadsheet->getActiveSheet()->setCellValue('A' . $i, $dato->nombre);
+        $spreadsheet->getActiveSheet()->setCellValue('B' . $i, $dato->especialidad);
+        $spreadsheet->getActiveSheet()->setCellValue('C' . $i, $dato->telefono);
+        $spreadsheet->getActiveSheet()->setCellValue('D' . $i, $dato->direccion);
+        $spreadsheet->getActiveSheet()->setCellValue('E' . $i, $dato->ciudad);
+        $i++;
+    }
+
+    // Guarda el archivo Excel en un directorio temporal
+    $fileName = 'registro.xlsx';
+    $tempPath = sys_get_temp_dir() . '/' . $fileName;
+    $writer = new Xlsx($spreadsheet);
+    $writer->save($tempPath);
+
+    // Envía el archivo Excel al navegador
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $fileName . '"');
+    header('Cache-Control: max-age=0');
+    readfile($tempPath);
+
+    // Elimina el archivo Excel temporal
+    unlink($tempPath);
+}
+public function acceder(){
+
+    return view('tipoFormulario');
+}
+
 }
 
 

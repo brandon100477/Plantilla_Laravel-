@@ -91,13 +91,20 @@
                         </tr>
                         @endforeach
 
+                        <form method="post" action="{{ route('exportar')}}">
+                        @csrf
+                        <!--Clasificación para elegir donde será registrado el paciente-->
+                            <input name="excel" id="excel" type="hidden" value="excel">
+                            <button type="submit" >Descargar Excel</button>
+                            <br>
+                        </form>
+
                     </tbody>
                 </table>
             </div>
         </div>
     <br><br>
         <div class="titulo1">
-            <input href="{{ route('registrados')}}" name="boton_excel" type="button" value="Descargar Excel" class="btn btn-warning btn-sm" id="boton_excel">
         </div>
     </body>
 </html>

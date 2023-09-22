@@ -48,6 +48,10 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     //Ruta para actualizar los formularios registrados
     Route::get('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
 
+    Route::post('medicos/formularios-registrados/Importar', 'exportar_excel')->name('exportar')->middleware('auth');
+
+    Route::post('/administrar/medicos','acceder')->name('acceder')->middleware('auth');
+    Route::get('/administrar/medicos','acceder')->name('acceder')->middleware('auth');
 });
 
 

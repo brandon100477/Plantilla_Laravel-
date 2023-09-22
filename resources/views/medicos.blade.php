@@ -13,9 +13,6 @@
 
     <body class="antialiased">
         <form method="POST">
-        <br>
-            <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
-        <br><br>
 
             <div class="col-md-12">
                 <div class="card">
