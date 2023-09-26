@@ -12,6 +12,11 @@
     </head>
 
     <body class="antialiased">
+<!--     @if ($datos->tipoUsuario ==='1')
+                <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
+                <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{}</b></a>
+
+                @endif -->
         <form method="POST">
 
             <div class="col-md-12">

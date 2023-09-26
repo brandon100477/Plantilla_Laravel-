@@ -6,7 +6,8 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-        <link src="../js/formulariosRegistrados.js">
+        <link src="{{ asset('js/formulariosRegistrados.js')}}">
+        <link href="{{ asset('js/formulariosRegistrados.js')}}">
         <title>Formularios Registrados</title>
         <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
     </head>
@@ -15,22 +16,19 @@
             <h1 class="filtrar">Formularios Registrados</h1>
         </div>
         <section method="POST" class="registro">
-        <!-- FILA 1 -->
         <br><br>
         <div class="titulo1">
             <label class="titulo_2">Filtrar formularios por:</label>
         </div>
-        <!-- FILA 2 -->
         <br><br>
-        <form>
+        <form><!-- Formulario para hacer las respectivas busquedas -->
             <div class="column">
                 <div class="form-group">
                     <input type="search" class="documento_campo" name="documento_campo" id="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: ">
-                    <input type="text" class="fechacreacion_campo" name="especialidad_campo" id="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: ">
-                    <input type="text" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: ">
+                    <input type="search" class="fechacreacion_campo" name="especialidad_campo" id="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: ">
+                    <input type="search" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: ">
                 </div>
             </div>
-            <!-- Botón para filtrar por medio de la categoría en los componentes de la tabla-->
             <div class="column">
                 <div class="form-group">
                     <label class="estados">Categorias:</label><br>
@@ -42,24 +40,49 @@
                     </select>
                 </div>
             </div>
-            <!-- Botón para buscar los componentes de la tabla-->
-            <button type="submit" >Buscar</button>
+            <button type="submit" >Buscar</button><!-- Botón para buscar los componentes de la tabla-->
+            <input type="hidden" name="seleccionados" id="seleccionados" value=""><!-- Se agrega un campo oculto para almacenar los IDs de los elementos seleccionados -->
+            <!-- Botón para seleccionar todos los componentes de la tabla -->
+            <input type="button" value="Seleccionar todo" class="btn btn-warning btn-sm" id="seleccionarTodo" onclick="toggleSeleccionTodos();">
+                <!--Scrip para el botón de seleccionar todos los campos en el checkbox-->
+                <script>
+                    function toggleSeleccionTodos() {
+                    const checkboxes = document.querySelectorAll('.checkbox');
+                    const seleccionarTodo = document.getElementById('seleccionarTodo');
+                    const seleccionados = [];
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = !checkbox.checked;
+                        // Si el checkbox está marcado, agrega su ID a la lista de seleccionados
+                        if (checkbox.checked) {
+                            seleccionados.push(checkbox.dataset.id);
+                        }
+                    });
+                // Almacena los IDs de los elementos seleccionados en el campo oculto
+                document.getElementById('seleccionados').value = seleccionados.join(',');
+                // Actualiza la acción del formulario para enviar solo los elementos seleccionados
+                document.getElementById('formDescargarExcel').action = "{{ route('exportar') }}";
+                    }
+                </script>
         </form>
-
-        <!-- Botón para seleccionar todos los componentes de la tabla-->
-        <div class="column">
-            <div class="form-group"><br>
-            <input type="button" value="Seleccionar todo" class="btn btn-warning btn-sm" id="seleccionarTodo" onclick="seleccionarTodos();">
-            </div>
-        </div>  
         <br>
-
+        <br>
+        <form method="post" action="{{ route('exportar') }}" id="formDescargarExcel">
+            @csrf
+            <!-- Aquí se guardan los datos filtrados para ser exportados -->
+            <input type="hidden" class="documento_campo" name="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: ">
+            <input type="hidden" class="fechacreacion_campo" name="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: ">
+            <input type="hidden" class="fechacreacion_campo" name="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: ">
+            <input type="hidden" id="select" name="select" class="select" value="{{ $filtro_select }}">
+            <button type="submit">Descargar Excel</button><!-- Botón para exportar el excel -->
+            <br>
+        </form>
+        <br>
         <!--Tabla con sus respectivos componentes-->
         <div class="collapse show" id="collapseTable">
             <div class="table-wrapper">
                 <table class="table-light">
                     <thead>
-                        <tr>
+                        <tr >
                             <th scope="col">Seleccionar</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Especialidad</th>
@@ -71,40 +94,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($datos as $dato)
-                        <tr>
-                            <th scope="row"><input type="checkbox" class="checkbox" name="seleccionar[]"></th>
+                        @foreach ($datos as $dato) <!--recorre la tabla y muestra todos los datos -->
+                        <tr class="fila-datos" data-id="{{ $dato->id }}">
+                            <td><input type="checkbox" class="checkbox" name="{{ $dato->id }}" data-id="{{ $dato->id }}"></td>
                             <td>{{ $dato->nombre }}</td>
                             <td>{{ $dato->especialidad }}</td>
                             <td>{{ $dato->telefono }}</td>
                             <td>{{ $dato->direccion }}</td>
                             <td>{{ $dato->ciudad }}</td>
-                            <td><a href ="{{route('actualizar')}}" id="boton_melo" class="boton_melo" name="butons">Actualizar</a></td>
+                            <td><!-- <a href ="{{route('actualizar')}}" id="boton_melo" class="boton_melo" name="butons">Actualizar</a> -->
+                        
+                            <form id="actualizar_{{ $dato->id }}" method="post" action="{{ route('actualizar') }}">
+                                    @csrf
+                                    <!-- Agregamos un input hidden para enviar el ID del elemento a actualizar -->
+                                    <input type="hidden" name="actualizar_id" value="{{ $dato->id }}">
+                                    <!-- Botón para actualizar -->
+                                    <button type="submit" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons">actualizar</button>
+                                </form>
+
+    
+                        </td>
                             <td>
-                                <form id="eliminarForm_" method="post">
+                                <form id="eliminarForm_{{ $dato->id }}" method="post" action="{{ route('eliminar') }}">
+                                    @csrf
                                     <!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
-                                    <input type="hidden" name="eliminar" value="">
+                                    <input type="hidden" name="eliminar_id" value="{{ $dato->id }}">
                                     <!-- Botón de eliminación -->
-                                    <button type="button" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons" onclick="confirmarEliminacion(this);"></button>              
+                                    <button type="submit" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
-
-                        <form method="post" action="{{ route('exportar')}}">
-                        @csrf
-                        <!--Clasificación para elegir donde será registrado el paciente-->
-                            <input name="excel" id="excel" type="hidden" value="excel">
-                            <button type="submit" >Descargar Excel</button>
-                            <br>
-                        </form>
-
                     </tbody>
                 </table>
             </div>
         </div>
     <br><br>
-        <div class="titulo1">
-        </div>
     </body>
 </html>

@@ -37,10 +37,10 @@
                             <td>{{ $dato->telefono }}</td>
                             <td>{{ $dato->correo }}</td>
                             <td>  
-                                <form method="post" action="{{ route('acceder')}}">
+                                <form method="post" action="{{ route('acceder', ['id'=>$dato->id]) }}">
                                     @csrf
                                     <!--Clasificación para elegir donde será registrado el paciente-->
-                                        <input name="{{ $dato->id }}" id="{{ $dato->id }}" type="hidden" value="{{ $dato->id }}">
+                                        <input name="id" id="id" type="hidden" value="{{ $dato->id }}">
                                         <button type="submit" >Acceder</button>
                                         <br>
                                 </form>

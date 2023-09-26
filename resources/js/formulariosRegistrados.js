@@ -1,11 +1,12 @@
-function seleccionarTodos() {
-    // Obtener todos los checkboxes con la clase "checkbox"
-    var checkboxes = document.getElementsByClassName("checkbox");
+function toggleSeleccionTodos() {
+    const checkboxes = document.querySelectorAll('.checkbox');
 
-    // Recorrer los checkboxes y establecer su propiedad "checked" según el estado actual
-    checkboxesSeleccionados = !checkboxesSeleccionados; // Alternar el estado
+    // Obtiene el estado actual del primer checkbox
+    const primerCheckbox = checkboxes[0];
+    const seleccionar = !primerCheckbox.checked;
 
-    for (var i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].checked = checkboxesSeleccionados;
-    }
+    // Cambia el estado de todos los checkboxes
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = seleccionar;
+    });
 }
