@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use Illuminate\Support\Facades\Response;
 
     //Este controlador majena todas las tablas de la base de datos de "Visitador_medico"
     //Maneja el inicio y registro de medicos y administradores.
@@ -21,7 +20,7 @@ class Visitador_medicoController extends Controller
     public function adminAuth(Request $request)
     //login validación y autenticación para administradores
     {
-        $datos = login_usuarios::all();
+        $datos = login_usuarios::all()->where('tipoUsuario', '=', '0');
         return view('admin.admin')->with('datos', $datos);
     }
     public function login()
@@ -31,7 +30,7 @@ class Visitador_medicoController extends Controller
     public function authenticate(Request $request)
     //login validación y autenticación usuarios
     {
-        $usuario =login_usuarios::where('usuario', $request->usuario)->first();
+        $usuario = login_usuarios::where('usuario', $request->usuario)->first();
         if (Hash::check($request->contrasena, $usuario->contrasena)) {
             // Obtener el token de acceso del usuario
             $token = auth()->login($usuario);
@@ -92,7 +91,6 @@ class Visitador_medicoController extends Controller
             return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido   
         }
     }
-
     //Gestión para insertar al formulario3 de la DB
     public function formulario3(Request $request){
         $id=auth()->user()->id; //Representa la obtención del ID del usuario que está iniciando sesión
@@ -144,13 +142,10 @@ class Visitador_medicoController extends Controller
                             ->get() ;
         return view('formulariosRegistrados', compact('datos', 'filtro_nombre',  'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
     }
-
-/* Procesos para actualizar los registros*/
+    /* Procesos para actualizar los registros*/
     public function tabla_actualizar(Request $request){
         $id = $request->input('actualizar_id');
-        $datos_actualizar = formulario3::where('id', $id)
-                            ->where('sesion_usuario','=', auth()->user()->id)
-                            ->get();
+        $datos_actualizar = formulario3::where('id', $id)->where('sesion_usuario','=', auth()->user()->id)->get();
         foreach ($datos_actualizar as $dato) {
             $id= $dato->id;
             $nombre = $dato->nombre;
@@ -258,47 +253,21 @@ class Visitador_medicoController extends Controller
     }
     /* Proceso para eliminar los datos */
     public function eliminar(Request $request){
-    $id = $request->input('eliminar_id');
-    // Realiza la lógica de eliminación, por ejemplo:
-    formulario3::where('id', $id)->delete();
-    // Redirecciona de vuelta a la página anterior o a donde desees
-    return redirect()->back()->with('success', 'Registro eliminado exitosamente');
+        $id = $request->input('eliminar_id');
+        // Realiza la lógica de eliminación, por ejemplo:
+        formulario3::where('id', $id)->delete();
+        // Redirecciona de vuelta a la página anterior o a donde desees
+        return redirect()->back()->with('success', 'Registro eliminado exitosamente');
     }
-
+    //Acceder desde un administrador.
     public function acceder(Request $request){
-         $id = $request->input('id');
-        $tipoUsuario ="";
-        $datos = login_usuarios::where('id', $id)
-                            ->first();
-        $datos->tipoUsuario = $tipoUsuario; 
-       $tipoUsuario = $datos->tipoUsuario; 
-         dd($tipoUsuario);
-          if (Hash::check($request->input('id'), $datos->id)) {  
-             //Obtener el token de acceso del usuario
-             $token = auth()->login($datos);  
-             //Almacenar el token de acceso en la sesión del usuario
-             $request->session()->put('accessToken', $token);
-            $request->session()->regenerate();
-            return view('medicos');
-    } 
-/*     $ide = $request->input('id');
-    $datos = login_usuarios::find($ide);
-    if (!$datos) {
-        // Manejo de error si el usuario no se encuentra
-        return redirect()->back()->with('error', 'Usuario no encontrado.');
+        $id = $request->input('id');
+        $user = $request->input('usuario'); // Obtener el perfil seleccionado
+        $contrasena = $request->input('contrasena');
+        $datos = login_usuarios::where('id', $id)->first();
+        $usuario = login_usuarios::where('usuario', $datos['usuario'])->first();
+        Auth::login($usuario);
+        session(['user' => $user]);
+        return redirect('/medicos');
     }
-     // Verifica la autenticación (esto dependerá de cómo estés manejando la autenticación en tu aplicación)
-    if (Hash::check($request->input('id'), $datos->id)) { 
-        // Obtiene el token de acceso del usuario
-        $token = auth()->login($datos); 
-         // Almacena el token de acceso en la sesión del usuario
-        $request->session()->put('accessToken', $token);
-        $request->session()->regenerate();
-         return redirect()->route('medicos');
-    } else {
-        // Manejo de error si la autenticación falla
-        return redirect()->back()->with('error', 'Autenticación fallida.');
-
-    } */
-}
 }

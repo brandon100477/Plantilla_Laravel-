@@ -5,12 +5,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
         <title>Formulario</title>
     </head>
-
     <body class="antialiased">
         <form method="POST">
         <br>
@@ -41,6 +39,8 @@
                                     @csrf
                                     <!--Clasificación para elegir donde será registrado el paciente-->
                                         <input name="id" id="id" type="hidden" value="{{ $dato->id }}">
+                                        <input name="usuario" id="usuario" type="hidden" value="{{ $dato->usuario }}">
+                                        <input name="contrasena" id="contrasena" type="hidden" value="{{ $dato->contrasena }}">
                                         <button type="submit" >Acceder</button>
                                         <br>
                                 </form>
@@ -50,15 +50,10 @@
             </tbody>
         </table>
     </div>
-
     </div>
 </form>
-
 </body>
-
 </html>
-
-
 @endsection
 </body>
 </html>

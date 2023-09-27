@@ -28,8 +28,8 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::get('/administrar', 'adminAuth')->middleware('auth.admin') ->name('admin.admin'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
 
     // Registro
-    Route::get('/register', 'register')->name('auth.register'); //aquí es donde llegan los datos del formulario "register.php" 
-    Route::post('/register', 'login_usuarios')->name('auth.login_usuarios'); //aquí se redireccionan al controlador "Visitador_medicoController"
+    Route::get('/register', 'register')->name('auth.register'); //GET:Se envian los datos por URL
+    Route::post('/register', 'login_usuarios')->name('auth.login_usuarios'); //POST:Se envían los datos de forma oculta
 
     // cierre de sesión
     Route::post('/logout', 'logout')->name('auth.logout')->middleware('auth');
@@ -49,15 +49,16 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::get('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
     Route::post('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
 
+    //Ruta para actualizar los datos de los registros
     Route::get('medicos/formularios-registrados/Actualizar/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
     Route::post('medicos/formularios-registrados/Actualizar/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
 
-
-    Route::post('medicos/formularios-registrados/Importar', 'exportar_excel')->name('exportar')->middleware('auth');
+    //Ruta para exportar los excel's 
+    Route::post('medicos/formularios-registrados/Exportar', 'exportar_excel')->name('exportar')->middleware('auth');
     Route::post('medicos/formularios-registrados/Eliminar', 'eliminar')->name('eliminar')->middleware('auth');
 
-    Route::post('/medicos','acceder')->name('acceder')->middleware('auth');
-/*     Route::get('/administrar/medicos','acceder')->name('acceder')->middleware('auth'); */
+    //Ruta para acceder desde un administrador a otro medico
+    Route::post('/{id}','acceder')->name('acceder')->middleware('auth');
 });
 
 
