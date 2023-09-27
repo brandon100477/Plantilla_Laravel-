@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
-
     //Este controlador majena todas las tablas de la base de datos de "Visitador_medico"
     //Maneja el inicio y registro de medicos y administradores.
 class Visitador_medicoController extends Controller
@@ -31,6 +30,10 @@ class Visitador_medicoController extends Controller
     //login validación y autenticación usuarios
     {
         $usuario = login_usuarios::where('usuario', $request->usuario)->first();
+        if (!$usuario) {
+            // El usuario no existe, muestra un mensaje de error
+            return back()->withErrors(['usuario' => 'El usuario no existe']);
+        }
         if (Hash::check($request->contrasena, $usuario->contrasena)) {
             // Obtener el token de acceso del usuario
             $token = auth()->login($usuario);
@@ -44,7 +47,16 @@ class Visitador_medicoController extends Controller
                 return redirect()->intended('/medicos');
             }
         }else{
-            return back()->withErrors(['usuario' => 'las credenciales no son correctas']);
+            // Validar errores
+            $errores = [];
+            if (!$usuario) {
+                $errores['usuario'] = 'El usuario no existe';
+            }else if (!Hash::check($request->contrasena, $usuario->contrasena)) {
+                $errores['contrasena'] = 'La contraseña es incorrecta';
+            }
+
+            // Mostrar el mensaje de error
+            return back()->withErrors($errores);
         }
     }
     //funciones para que el registro a la tabla "login_usuarios" sea correcta.
@@ -79,14 +91,17 @@ class Visitador_medicoController extends Controller
         $accion = $request->input('tipo');
         $contenido = "";
         if ($accion === 'tipo') {
+            $number =2;
             $contenido = "Doctores";
-            return view('Formularios.Formulario')->with('contenido', $contenido);
+            return view('Formularios.Formulario', compact('number', 'contenido'));
         } elseif ($accion === 'tipo2') {
+            $number =3;
             $contenido = "Instituciones";
-            return view('Formularios.Formulario')->with('contenido', $contenido);
+            return view('Formularios.Formulario', compact('number', 'contenido'));
         }elseif ($accion === 'tipo3') {
+            $number =4;
             $contenido = "Centro Deportivo";
-            return view('Formularios.Formulario')->with('contenido', $contenido);
+            return view('Formularios.Formulario', compact('number', 'contenido'));
         }else{
             return redirect()->back(); // Manejo predeterminado si no se presionó ningún botón válido   
         }
@@ -121,7 +136,7 @@ class Visitador_medicoController extends Controller
         $agregar -> preg_indag11 = $request -> preg_indag11;
         $agregar -> preg_indag12 = $request -> preg_indag12;
         $agregar -> sesion_usuario = $id;
-        $agregar -> categoria = $request ->select;
+        $agregar -> categoria = $request ->categoria;
         $agregar -> save();
         return view('tipoFormulario');
     }

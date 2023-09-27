@@ -16,7 +16,6 @@
     <h2 id="h2">Seleccione la categoria de formulario que desea diligenciar</h2>
 
     <br><br>
-
     <form method="post" action="{{ route('clasificacion') }}">
     @csrf
     <!--Clasificación para elegir donde será registrado el paciente-->

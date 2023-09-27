@@ -7,6 +7,7 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
+        <link rel="stylesheet" href="{{ asset('css/Formulario.css')}}">
         <title>{{ $contenido }}</title>
         <a href="{{ route('volver')}}" class="cerrar" id="cerrar">Volver</a>
 </head>
@@ -30,16 +31,14 @@
                 </div>
 
                 <div class="accordion_content">
-                <br>
-                <select id="select" name="select" class="select" onchange="actualizar(this)">	
-                            <option selected readonly>Seleccione una categoria</option>
-                            <option value="2">Medicos</option>
-                            <option value="3">Instituciones</option>
-                            <option value="4">Centro deportivo</option>
-                </select><br><br><br>
+                <br><br><br>
+                <input type="hidden" class="campo_texto" name="categoria" id="categoria" value="{{ $number }}"><br><br><br>
 
-                <label for="texto" class="textos">1. Nombre </label><br><br>
-                    <input type="text" class="campo_texto" name="nombre" id="nombre" placeholder="Escriba su respuesta"><br><br><br>
+
+                <label for="texto" class="textos">1. Nombre* </label><br><br>
+                    <div id="error-message" style="color: red;"></div>
+                        <input type="text" class="campo_texto" name="nombre" id="nombre" placeholder="Escriba su respuesta"><br><br><br>
+                    
 
                 <label for="texto" class="textos">2. Especialidad </label><br><br>
                     <input type="text" class="campo_texto" name="especialidad" id="especialidad" placeholder="Escriba su respuesta"><br><br><br>
@@ -360,4 +359,68 @@
             </form>
         </section>
     </body>
+    <script>
+        function showModal(message) {
+    // Crea un div para la ventana modal
+    const modal = document.createElement("div");
+    modal.className = "modal";
+
+    // Crea el contenido de la ventana modal
+    const modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+
+    // Agrega el mensaje de error al contenido de la ventana modal
+    const errorMessage = document.createElement("div");
+    errorMessage.className = "error-message";
+    errorMessage.textContent = message;
+    modalContent.appendChild(errorMessage);
+
+    // Crea el símbolo de rechazo (X)
+    const rejectSymbol = document.createElement("div");
+    rejectSymbol.className = "reject-symbol";
+    rejectSymbol.innerHTML = "&times;"; // Símbolo de equis (X)
+
+    // Agrega el símbolo de rechazo al contenido de la ventana modal
+    modalContent.appendChild(rejectSymbol);
+
+    // Agrega el contenido a la ventana modal
+    modal.appendChild(modalContent);
+
+    // Agrega la ventana modal al cuerpo del documento
+    document.body.appendChild(modal);
+
+    // Cierra la ventana modal al hacer clic en el símbolo de rechazo (X)
+    rejectSymbol.addEventListener("click", function () {
+        document.body.removeChild(modal);
+    });
+}
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const errorMessage = document.getElementById("error-message");
+            form.addEventListener("submit", function (event) {
+                // Evita que el formulario se envíe automáticamente
+                event.preventDefault();
+                // Obtiene el valor del campo "nombre"
+                const nombreInput = document.getElementById("nombre");
+                const nombre = nombreInput.value;
+                // Realiza la validación
+                if (!nombre || nombre.trim() === "") {
+                    showModal("Por favor, ingrese al menos el nombre.");
+                    // Lleva al usuario al principio del scroll o al inicio de la página
+                    window.scrollTo({
+                        top: 0, // Posición vertical (en píxeles) a la que quieres desplazarte
+                        behavior: "smooth"
+                    });
+                    //Mensaje de error de color rojo.
+                    errorMessage.textContent = "Por favor, ingrese al menos el nombre.";
+                    return; // Evita el envío del formulario
+                } else {
+                    // Limpia cualquier mensaje de error previo
+                    errorMessage.textContent = "";
+                    // Envía el formulario si todo está correcto
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </html>
