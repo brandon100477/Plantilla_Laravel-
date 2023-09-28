@@ -108,6 +108,14 @@ class Visitador_medicoController extends Controller
     }
     //Gestión para insertar al formulario3 de la DB
     public function formulario3(Request $request){
+        $request->validate([
+            'nombre' => 'required',
+            // Otras reglas de validación para otros campos
+        ]);
+    
+        if ($request->input('nombre') === "") {
+            return view('tipoFormulario')->with('mensaje', 'El campo "nombre" no puede estar vacío.');
+        }
         $id=auth()->user()->id; //Representa la obtención del ID del usuario que está iniciando sesión
         $agregar = new formulario3();
         //Parte: Actualización de datos
@@ -138,7 +146,7 @@ class Visitador_medicoController extends Controller
         $agregar -> sesion_usuario = $id;
         $agregar -> categoria = $request ->categoria;
         $agregar -> save();
-        return view('tipoFormulario');
+        return view('tipoFormulario')->with('mensaje', 'Se registro de forma exitosa.');
     }
     /* Se muestra la tabla de registros */
     public function tabla(Request $request)

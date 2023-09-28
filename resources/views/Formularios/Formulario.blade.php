@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{{ asset('css/Formulario.css')}}">
         <title>{{ $contenido }}</title>
         <a href="{{ route('volver')}}" class="cerrar" id="cerrar">Volver</a>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
     <body>
         <section class="inicio">
@@ -359,41 +361,7 @@
             </form>
         </section>
     </body>
-    <script>
-        function showModal(message) {
-    // Crea un div para la ventana modal
-    const modal = document.createElement("div");
-    modal.className = "modal";
-
-    // Crea el contenido de la ventana modal
-    const modalContent = document.createElement("div");
-    modalContent.className = "modal-content";
-
-    // Agrega el mensaje de error al contenido de la ventana modal
-    const errorMessage = document.createElement("div");
-    errorMessage.className = "error-message";
-    errorMessage.textContent = message;
-    modalContent.appendChild(errorMessage);
-
-    // Crea el símbolo de rechazo (X)
-    const rejectSymbol = document.createElement("div");
-    rejectSymbol.className = "reject-symbol";
-    rejectSymbol.innerHTML = "&times;"; // Símbolo de equis (X)
-
-    // Agrega el símbolo de rechazo al contenido de la ventana modal
-    modalContent.appendChild(rejectSymbol);
-
-    // Agrega el contenido a la ventana modal
-    modal.appendChild(modalContent);
-
-    // Agrega la ventana modal al cuerpo del documento
-    document.body.appendChild(modal);
-
-    // Cierra la ventana modal al hacer clic en el símbolo de rechazo (X)
-    rejectSymbol.addEventListener("click", function () {
-        document.body.removeChild(modal);
-    });
-}
+    <script> 
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector("form");
             const errorMessage = document.getElementById("error-message");
@@ -405,7 +373,11 @@
                 const nombre = nombreInput.value;
                 // Realiza la validación
                 if (!nombre || nombre.trim() === "") {
-                    showModal("Por favor, ingrese al menos el nombre.");
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Algo salió mal, ¿Agregaste por lo menos el nombre?'
+                    })
                     // Lleva al usuario al principio del scroll o al inicio de la página
                     window.scrollTo({
                         top: 0, // Posición vertical (en píxeles) a la que quieres desplazarte
