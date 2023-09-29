@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Actualizar</title>
     <a href="{{ route('registrados')}}" class="cerrar" id="cerrar">Volver</a>
     <!--Se pone la Ruta 'registrados' para volver a la vista donde se filtran los registros-->
@@ -185,4 +186,17 @@
             <input type="submit" class="butons" name="butons" id="butons" value="Actualizar" />
         </form>
     </body>
+    <script>
+    async function mostrarAlerta() {
+        await Swal.fire('¡Perfecto!', 'Registro actualizado con éxito', 'success');
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe automáticamente
+            await mostrarAlerta(); // Muestra la alerta y espera a que se cierre
+            form.submit(); // Envía el formulario después de mostrar la alerta
+        });
+    });
+    </script>
 </html>

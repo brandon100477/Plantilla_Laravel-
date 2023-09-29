@@ -231,7 +231,7 @@ class Visitador_medicoController extends Controller
         $datos_actualizar->preg_indag11 = $request->input('preg_indag11');
         $datos_actualizar->preg_indag12 = $request->input('preg_indag12');
         $datos_actualizar -> save();
-        return $this->tabla(new Request());
+        return redirect()->route('registrados');
     }
     /* Exportación de Excel */
     public function exportar_excel(Request $request)

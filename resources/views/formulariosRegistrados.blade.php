@@ -7,7 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
         <link src="{{ asset('js/formulariosRegistrados.js')}}">
-        <link href="{{ asset('js/formulariosRegistrados.js')}}">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Formularios Registrados</title>
         <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
     </head>
@@ -109,7 +109,7 @@
                                     <input type="hidden" name="actualizar_id" value="{{ $dato->id }}">
                                     <!-- Botón para actualizar -->
                                     <button type="submit" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons">actualizar</button>
-                                </form>
+                            </form>
                             </td>
                             <td>
                                 <form id="eliminarForm_{{ $dato->id }}" method="post" action="{{ route('eliminar') }}">
@@ -117,7 +117,7 @@
                                     <!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
                                     <input type="hidden" name="eliminar_id" value="{{ $dato->id }}">
                                     <!-- Botón de eliminación -->
-                                    <button type="submit" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons">Eliminar</button>
+                                    <button type="submit" class="fa-solid fa-xmark btn-lg boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -128,4 +128,46 @@
         </div>
     <br><br>
     </body>
+    <!-- botón para eliminar registros -->
+    <script>
+    async function mostrarAlertaEliminar(id) {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás revertir esto.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Bórralo'
+        });
+        if (result.isConfirmed) {
+            Swal.fire(
+                '¡Borrado!',
+                'El registro ha sido eliminado',
+                'success'
+            )
+            // El usuario confirmó la eliminación, realiza la acción aquí
+            const form = document.getElementById(`eliminarForm_${id}`);
+            setTimeout(function () {form.submit(); }, 1400);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe automáticamente
+            await mostrarAlerta(); // Muestra la alerta y espera a que se cierre
+            form.submit(); // Envía el formulario después de mostrar la alerta
+        });
+        // Agregar un evento click a los botones de eliminar en cada fila de la tabla
+        const botonesEliminar = document.querySelectorAll(".boton-eliminar");
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener("click", function (event) {
+                event.preventDefault(); // Evita que el enlace o botón haga su acción predeterminada
+                const id = boton.dataset.id; // Obtén el ID del botón de eliminar
+                mostrarAlertaEliminar(id); // Muestra la alerta de confirmación
+            });
+        });
+    });
+</script>
 </html>
