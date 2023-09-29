@@ -10,35 +10,30 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>tipo de formulario</title>
-        <a href="{{ route('volver1')}}" class="cerrar" id="cerrar">Volver</a>
-        
 
     </head>
-<body>
-
-    <br>
-    <h2 id="h2">Seleccione la categoria de formulario que desea diligenciar</h2>
-
-    <br><br>
-    <form method="post" action="{{ route('clasificacion') }}">
-    @csrf
-    <!--Clasificación para elegir donde será registrado el paciente-->
-        <input name="tipo" id="tipo" type="hidden" value="tipo">
-        <button type="submit" >Doctores</button>
+    <body>
         <br>
-    </form>
-    <form method="post" action="{{ route('clasificacion') }}">
-    @csrf
-        <input name="tipo" id="tipo" type="hidden" value="tipo2">
-        <button type="submit" >Instituciones</button>
-    </form>
-    <br>
-    <form method="post" action="{{ route('clasificacion') }}">
-    @csrf
-        <input name="tipo" id="tipo" type="hidden" value="tipo3">
-        <button type="submit" >Centro Deportivo</button>
-    </form>
-    <br>
-
-</body>
+        <h2 id="h2">Seleccione la categoria de formulario que desea diligenciar</h2>
+        <br><br>
+        <form method="post" action="{{ route('clasificacion') }}">
+        @csrf
+        <!--Clasificación para elegir donde será registrado el paciente-->
+            <input name="tipo" id="tipo" type="hidden" value="tipo">
+            <button type="submit" >Doctores</button>
+            <br>
+        </form>
+        <form method="post" action="{{ route('clasificacion') }}">
+        @csrf
+            <input name="tipo" id="tipo" type="hidden" value="tipo2">
+            <button type="submit" >Instituciones</button>
+        </form>
+        <br>
+        <form method="post" action="{{ route('clasificacion') }}">
+        @csrf
+            <input name="tipo" id="tipo" type="hidden" value="tipo3">
+            <button type="submit" >Centro Deportivo</button>
+        </form>
+        <br>
+    </body>
 </html>

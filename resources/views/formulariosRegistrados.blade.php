@@ -102,8 +102,7 @@
                             <td>{{ $dato->telefono }}</td>
                             <td>{{ $dato->direccion }}</td>
                             <td>{{ $dato->ciudad }}</td>
-                            <td><!-- <a href ="{{route('actualizar')}}" id="boton_melo" class="boton_melo" name="butons">Actualizar</a> -->
-                        
+                            <td>
                             <form id="actualizar_{{ $dato->id }}" method="post" action="{{ route('actualizar') }}">
                                     @csrf
                                     <!-- Agregamos un input hidden para enviar el ID del elemento a actualizar -->
@@ -111,9 +110,7 @@
                                     <!-- Botón para actualizar -->
                                     <button type="submit" class="fa-solid fa-xmark btn-lg" id="boton_borrar" name="butons">actualizar</button>
                                 </form>
-
-    
-                        </td>
+                            </td>
                             <td>
                                 <form id="eliminarForm_{{ $dato->id }}" method="post" action="{{ route('eliminar') }}">
                                     @csrf
