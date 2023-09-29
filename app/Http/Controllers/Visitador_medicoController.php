@@ -236,12 +236,18 @@ class Visitador_medicoController extends Controller
     /* Exportación de Excel */
     public function exportar_excel(Request $request)
     {
-        $filtro_nombre = $request->get('documento_campo');
-        $filtro_ciudad = $request->get('ciudad_campo');
-        $filtro_especialidad = $request->get('especialidad_campo');
-        $filtro_select = $request->get('select');
-        $sesion_usuario = auth()->user()->id;
-        $datos = formulario3::orderByRaw("CASE WHEN sesion_usuario = $sesion_usuario THEN 0 ELSE 1 END")
+        $datos = formulario3::orderBy('id', 'ASC')
+        ->where('nombre', 'like', '%' . $request->get('documento_campo') . '%')
+        ->where('ciudad', 'like', '%' . $request->get('ciudad_campo') . '%')
+        ->where('especialidad', 'like', '%' . $request->get('especialidad_campo') . '%')
+        ->where('categoria', 'like', '%' . $request->get('select') . '%')
+        ->where('sesion_usuario', '=', auth()->user()->id)
+        ->get(); 
+{
+
+
+
+        /* $datos = formulario3::orderByRaw("CASE WHEN sesion_usuario = $sesion_usuario THEN 0 ELSE 1 END")
                             ->orderBy('id', 'ASC')
                             ->where(function ($query) use ($filtro_nombre) {
                                 if (!empty($filtro_nombre)) {
@@ -260,7 +266,8 @@ class Visitador_medicoController extends Controller
                                     $query->where('categoria', 'like', '%' . $filtro_select . '%');
                                 }})
                             ->where('sesion_usuario', $sesion_usuario)
-                            ->get();
+                            ->get(); */
+
         // Obtiene los IDs de las filas seleccionadas
         $idsSeleccionados = explode(',', $request->input('seleccionados', ''));
         // Crea una nueva hoja de cálculo
@@ -271,14 +278,49 @@ class Visitador_medicoController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('C1', 'Teléfono');
         $spreadsheet->getActiveSheet()->setCellValue('D1', 'Dirección');
         $spreadsheet->getActiveSheet()->setCellValue('E1', 'Ciudad');
+        $spreadsheet->getActiveSheet()->setCellValue('F1', 'Secretaria');
+        $spreadsheet->getActiveSheet()->setCellValue('G1', 'tel_ayuda');
+        $spreadsheet->getActiveSheet()->setCellValue('H1', 'ips_consulta');
+        $spreadsheet->getActiveSheet()->setCellValue('I1', 'ips_cirugia');
+        $spreadsheet->getActiveSheet()->setCellValue('J1', 'preg_indag1');
+        $spreadsheet->getActiveSheet()->setCellValue('K1', 'preg_indag2');
+        $spreadsheet->getActiveSheet()->setCellValue('L1', 'preg_indag3');
+        $spreadsheet->getActiveSheet()->setCellValue('M1', 'preg_indag4');
+        $spreadsheet->getActiveSheet()->setCellValue('N1', 'preg_indag5');
+        $spreadsheet->getActiveSheet()->setCellValue('O1', 'preg_indag6');
+        $spreadsheet->getActiveSheet()->setCellValue('P1', 'preg_indag7');
+        $spreadsheet->getActiveSheet()->setCellValue('Q1', 'preg_indag8');
+        $spreadsheet->getActiveSheet()->setCellValue('R1', 'preg_indag9');
+        $spreadsheet->getActiveSheet()->setCellValue('S1', 'preg_indag10');
+        $spreadsheet->getActiveSheet()->setCellValue('T1', 'preg_indag11');
+        $spreadsheet->getActiveSheet()->setCellValue('U1', 'preg_indag12');
+        $spreadsheet->getActiveSheet()->setCellValue('V1', 'Categoría');
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(28);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(60);
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true); // Negrita
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(60);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(60);
+        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('R')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('S')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(60);
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
+        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getFont()->setBold(true); // Negrita
+        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
         // Recorre los datos y los escribe en la hoja de cálculo
         foreach ($datos as $dato) {
             $spreadsheet->getActiveSheet()->setCellValue('A' . $i, $dato->nombre);
@@ -286,6 +328,23 @@ class Visitador_medicoController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('C' . $i, $dato->telefono);
             $spreadsheet->getActiveSheet()->setCellValue('D' . $i, $dato->direccion);
             $spreadsheet->getActiveSheet()->setCellValue('E' . $i, $dato->ciudad);
+            $spreadsheet->getActiveSheet()->setCellValue('F' . $i, $dato->secretaria);
+            $spreadsheet->getActiveSheet()->setCellValue('G' . $i, $dato->tel_ayuda);
+            $spreadsheet->getActiveSheet()->setCellValue('H' . $i, $dato->ips_consulta);
+            $spreadsheet->getActiveSheet()->setCellValue('I' . $i, $dato->ips_cirugia);
+            $spreadsheet->getActiveSheet()->setCellValue('J' . $i, $dato->preg_indag1);
+            $spreadsheet->getActiveSheet()->setCellValue('K' . $i, $dato->preg_indag2);
+            $spreadsheet->getActiveSheet()->setCellValue('L' . $i, $dato->preg_indag3);
+            $spreadsheet->getActiveSheet()->setCellValue('M' . $i, $dato->preg_indag4);
+            $spreadsheet->getActiveSheet()->setCellValue('N' . $i, $dato->preg_indag5);
+            $spreadsheet->getActiveSheet()->setCellValue('O' . $i, $dato->preg_indag6);
+            $spreadsheet->getActiveSheet()->setCellValue('P' . $i, $dato->preg_indag7);
+            $spreadsheet->getActiveSheet()->setCellValue('Q' . $i, $dato->preg_indag8);
+            $spreadsheet->getActiveSheet()->setCellValue('R' . $i, $dato->preg_indag9);
+            $spreadsheet->getActiveSheet()->setCellValue('S' . $i, $dato->preg_indag10);
+            $spreadsheet->getActiveSheet()->setCellValue('T' . $i, $dato->preg_indag11);
+            $spreadsheet->getActiveSheet()->setCellValue('U' . $i, $dato->preg_indag12);
+            $spreadsheet->getActiveSheet()->setCellValue('V' . $i, $dato->categoria);
             $i++;
         }
         // Guarda el archivo Excel en un directorio temporal
@@ -299,7 +358,8 @@ class Visitador_medicoController extends Controller
         readfile($tempPath);
         // Elimina el archivo Excel temporal
         unlink($tempPath);
-    }
+    };
+}
     /* Proceso para eliminar los datos */
     public function eliminar(Request $request){
         $id = $request->input('eliminar_id');

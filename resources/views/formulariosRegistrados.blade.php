@@ -66,7 +66,7 @@
         </form>
         <br>
         <br>
-        <form method="post" action="{{ route('exportar') }}" id="formDescargarExcel">
+        <form method="post" action="{{ route('exportar') }}" id="formDescargarExcel" onsubmit="return validarSeleccion();">
             @csrf
             <!-- Aquí se guardan los datos filtrados para ser exportados -->
             <input type="hidden" class="documento_campo" name="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: ">
@@ -76,6 +76,22 @@
             <button type="submit">Descargar Excel</button><!-- Botón para exportar el excel -->
             <br>
         </form>
+        <!-- Agrega una función de validación en JavaScript -->
+        <script>
+        function validarSeleccion() {
+            const checkboxes = document.querySelectorAll('.checkbox:checked');
+            if (checkboxes.length === 0) {
+                Swal.fire({
+                title: '¡Ups. Algo salio mal!',
+                text: 'Selecciona mínimo un dato',
+                icon: 'warning',
+        });
+                return false; // Evita enviar el formulario si no hay checkboxes seleccionados
+            }
+            // Continúa con el envío del formulario si al menos un checkbox está seleccionado
+            return true;
+        }
+        </script>
         <br>
         <!--Tabla con sus respectivos componentes-->
         <div class="collapse show" id="collapseTable">
@@ -96,7 +112,7 @@
                     <tbody>
                         @foreach ($datos as $dato) <!--recorre la tabla y muestra todos los datos -->
                         <tr class="fila-datos" data-id="{{ $dato->id }}">
-                            <td><input type="checkbox" class="checkbox" name="{{ $dato->id }}" data-id="{{ $dato->id }}"></td>
+                            <td><input type="checkbox" class="checkbox" name="seleccionados" data-id="{{ $dato->id }}" value="{{ $dato->id }}" {{ $dato->is_selected ? 'checked' : '' }}></td>
                             <td>{{ $dato->nombre }}</td>
                             <td>{{ $dato->especialidad }}</td>
                             <td>{{ $dato->telefono }}</td>
@@ -155,12 +171,10 @@
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector("form");
         form.addEventListener("submit", async function (event) {
-            event.preventDefault(); // Evita que el formulario se envíe automáticamente
             await mostrarAlerta(); // Muestra la alerta y espera a que se cierre
             form.submit(); // Envía el formulario después de mostrar la alerta
         });
-        // Agregar un evento click a los botones de eliminar en cada fila de la tabla
-        const botonesEliminar = document.querySelectorAll(".boton-eliminar");
+        const botonesEliminar = document.querySelectorAll(".boton-eliminar"); // Agregar un evento click a los botones de eliminar en cada fila de la tabla
         botonesEliminar.forEach(boton => {
             boton.addEventListener("click", function (event) {
                 event.preventDefault(); // Evita que el enlace o botón haga su acción predeterminada
