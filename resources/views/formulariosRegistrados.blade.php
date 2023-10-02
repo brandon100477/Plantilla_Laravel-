@@ -69,13 +69,11 @@
         <form method="post" action="{{ route('exportar') }}" id="formDescargarExcel" onsubmit="return validarSeleccion();">
             @csrf
             <!-- Aquí se guardan los datos filtrados para ser exportados -->
-            <input type="hidden" class="documento_campo" name="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: ">
-            <input type="hidden" class="fechacreacion_campo" name="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: ">
-            <input type="hidden" class="fechacreacion_campo" name="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: ">
+            <input type="hidden" class="" name="documento_campo" value="{{ $filtro_nombre }}">
+            <input type="hidden" class="fechacreacion_campo" name="especialidad_campo" value="{{ $filtro_especialidad }}">
+            <input type="hidden" class="fechacreacion_campo" name="ciudad_campo" value="{{ $filtro_ciudad }}">
             <input type="hidden" id="select" name="select" class="select" value="{{ $filtro_select }}">
-            <button type="submit">Descargar Excel</button><!-- Botón para exportar el excel -->
-            <br>
-        </form>
+
         <!-- Agrega una función de validación en JavaScript -->
         <script>
         function validarSeleccion() {
@@ -112,7 +110,7 @@
                     <tbody>
                         @foreach ($datos as $dato) <!--recorre la tabla y muestra todos los datos -->
                         <tr class="fila-datos" data-id="{{ $dato->id }}">
-                            <td><input type="checkbox" class="checkbox" name="seleccionados" data-id="{{ $dato->id }}" value="{{ $dato->id }}" {{ $dato->is_selected ? 'checked' : '' }}></td>
+                            <td><input type="checkbox" class="checkbox" name="seleccionados[]" value="{{ $dato->id }}"></td>
                             <td>{{ $dato->nombre }}</td>
                             <td>{{ $dato->especialidad }}</td>
                             <td>{{ $dato->telefono }}</td>
@@ -140,6 +138,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <button type="submit">Descargar Excel</button><!-- Botón para exportar el excel -->
+            <br>
+        </form>
             </div>
         </div>
     <br><br>

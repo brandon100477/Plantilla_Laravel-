@@ -236,40 +236,16 @@ class Visitador_medicoController extends Controller
     /* Exportación de Excel */
     public function exportar_excel(Request $request)
     {
+        $idsSeleccionados = $request->input('seleccionados', []);// Obtiene los IDs de las filas seleccionadas
         $datos = formulario3::orderBy('id', 'ASC')
         ->where('nombre', 'like', '%' . $request->get('documento_campo') . '%')
         ->where('ciudad', 'like', '%' . $request->get('ciudad_campo') . '%')
         ->where('especialidad', 'like', '%' . $request->get('especialidad_campo') . '%')
         ->where('categoria', 'like', '%' . $request->get('select') . '%')
         ->where('sesion_usuario', '=', auth()->user()->id)
-        ->get(); 
-{
-
-
-
-        /* $datos = formulario3::orderByRaw("CASE WHEN sesion_usuario = $sesion_usuario THEN 0 ELSE 1 END")
-                            ->orderBy('id', 'ASC')
-                            ->where(function ($query) use ($filtro_nombre) {
-                                if (!empty($filtro_nombre)) {
-                                    $query->where('nombre', 'like', '%' . $filtro_nombre . '%');
-                                }})
-                            ->where(function ($query) use ($filtro_ciudad) {
-                                if (!empty($filtro_ciudad)) {
-                                    $query->where('ciudad', 'like', '%' . $filtro_ciudad . '%');
-                                }})
-                            ->where(function ($query) use ($filtro_especialidad) {
-                                if (!empty($filtro_especialidad)) {
-                                    $query->where('especialidad', 'like', '%' . $filtro_especialidad . '%');
-                                }})
-                            ->where(function ($query) use ($filtro_select) {
-                                if (!empty($filtro_select)) {
-                                    $query->where('categoria', 'like', '%' . $filtro_select . '%');
-                                }})
-                            ->where('sesion_usuario', $sesion_usuario)
-                            ->get(); */
-
-        // Obtiene los IDs de las filas seleccionadas
-        $idsSeleccionados = explode(',', $request->input('seleccionados', ''));
+        ->whereIn('id', $idsSeleccionados)
+        ->get();
+        {
         // Crea una nueva hoja de cálculo
         $spreadsheet = new Spreadsheet();
         // Agrega los encabezados de las columnas y estilos
@@ -279,48 +255,51 @@ class Visitador_medicoController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('D1', 'Dirección');
         $spreadsheet->getActiveSheet()->setCellValue('E1', 'Ciudad');
         $spreadsheet->getActiveSheet()->setCellValue('F1', 'Secretaria');
-        $spreadsheet->getActiveSheet()->setCellValue('G1', 'tel_ayuda');
-        $spreadsheet->getActiveSheet()->setCellValue('H1', 'ips_consulta');
-        $spreadsheet->getActiveSheet()->setCellValue('I1', 'ips_cirugia');
-        $spreadsheet->getActiveSheet()->setCellValue('J1', 'preg_indag1');
-        $spreadsheet->getActiveSheet()->setCellValue('K1', 'preg_indag2');
-        $spreadsheet->getActiveSheet()->setCellValue('L1', 'preg_indag3');
-        $spreadsheet->getActiveSheet()->setCellValue('M1', 'preg_indag4');
-        $spreadsheet->getActiveSheet()->setCellValue('N1', 'preg_indag5');
-        $spreadsheet->getActiveSheet()->setCellValue('O1', 'preg_indag6');
-        $spreadsheet->getActiveSheet()->setCellValue('P1', 'preg_indag7');
-        $spreadsheet->getActiveSheet()->setCellValue('Q1', 'preg_indag8');
-        $spreadsheet->getActiveSheet()->setCellValue('R1', 'preg_indag9');
-        $spreadsheet->getActiveSheet()->setCellValue('S1', 'preg_indag10');
-        $spreadsheet->getActiveSheet()->setCellValue('T1', 'preg_indag11');
-        $spreadsheet->getActiveSheet()->setCellValue('U1', 'preg_indag12');
+        $spreadsheet->getActiveSheet()->setCellValue('G1', 'Telefono de ayuda');
+        $spreadsheet->getActiveSheet()->setCellValue('H1', 'Telefono de ayuda');
+        $spreadsheet->getActiveSheet()->setCellValue('I1', 'Ips cirugia');
+        $spreadsheet->getActiveSheet()->setCellValue('J1', '¿En este momento qué procedimientos de apoyo diagnostica en imageniologia son los que más ordena como especialista?');
+        $spreadsheet->getActiveSheet()->setCellValue('K1', '¿Cree usted que nuestros resultados son confiables y determinantes para la definición del diagnóstico de sus pacientes?');
+        $spreadsheet->getActiveSheet()->setCellValue('L1', '¿Considera que en _____, somos oportunos con el Agendamiento de las citas para sus pacientes?');
+        $spreadsheet->getActiveSheet()->setCellValue('M1', '¿Que piensa de la calidad de la imagen que usted recibe, está de acuerdo con los protocolos solicitados?');
+        $spreadsheet->getActiveSheet()->setCellValue('N1', '¿Esta de acuerdo con el tiempo de entrega de los resultados que entregamos a sus pacientes?');
+        $spreadsheet->getActiveSheet()->setCellValue('O1', '¿Cuantos procedimientos de apoyo diagnóstico ordena en el mes? Más de 5, más de 10?');
+        $spreadsheet->getActiveSheet()->setCellValue('P1', '¿Sabe usar nuestra plataforma, para ver los resultados e imágenes de sus pacientes?');
+        $spreadsheet->getActiveSheet()->setCellValue('Q1', '¿Que cosas positivas ha encontrado en el proceso de toma de imagenes?');
+        $spreadsheet->getActiveSheet()->setCellValue('R1', '¿Que ayudas diagnosticas cree que se necesita en la ciudad?');
+        $spreadsheet->getActiveSheet()->setCellValue('S1', '¿Durante este mes ha tenido alguna situación desafortunada con algún paciente que haya tomado nuestros servicios?');
+        $spreadsheet->getActiveSheet()->setCellValue('T1', '¿Conoce alguna Tecnica que podemos innovar?');
+        $spreadsheet->getActiveSheet()->setCellValue('U1', '¿En Imagenologia que capacitación quisiera tener?');
         $spreadsheet->getActiveSheet()->setCellValue('V1', 'Categoría');
+        $spreadsheet->getActiveSheet()->setCellValue('W1', 'Id del visitador - 45 (Laura) / 46 (Walter)');
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(28);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(60);
-        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(28);
-        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(28);
         $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(25);
         $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(28);
-        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(60);
-        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(10);
-        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(40);
-        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(28);
-        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(60);
-        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setWidth(10);
-        $spreadsheet->getActiveSheet()->getColumnDimension('R')->setWidth(28);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('R')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('S')->setWidth(40);
-        $spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(28);
-        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(60);
+        $spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('W')->setWidth(12);
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
-        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getFont()->setBold(true); // Negrita
-        $spreadsheet->getActiveSheet()->getStyle('A1:V1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
+        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getFont()->setBold(true); // Negrita
+        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
         // Recorre los datos y los escribe en la hoja de cálculo
         foreach ($datos as $dato) {
             $spreadsheet->getActiveSheet()->setCellValue('A' . $i, $dato->nombre);
@@ -345,6 +324,7 @@ class Visitador_medicoController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('T' . $i, $dato->preg_indag11);
             $spreadsheet->getActiveSheet()->setCellValue('U' . $i, $dato->preg_indag12);
             $spreadsheet->getActiveSheet()->setCellValue('V' . $i, $dato->categoria);
+            $spreadsheet->getActiveSheet()->setCellValue('W' . $i, $dato->sesion_usuario);
             $i++;
         }
         // Guarda el archivo Excel en un directorio temporal
