@@ -7,6 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://kit.fontawesome.com/6608247b8b.js" crossorigin="anonymous"></script>
         <title>Formularios Registrados</title>
         
     </head>
@@ -23,29 +24,29 @@
                 <form><!-- Formulario para hacer las respectivas busquedas -->
                     <div class="column">
                         <div class="form-group">
-                            <input type="search" class="documento_campo" name="documento_campo" id="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: ">
-                            <input type="search" class="fechacreacion_campo" name="especialidad_campo" id="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: ">
-                            <input type="search" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: ">
+                            <input type="search" class="documento_campo" name="documento_campo" id="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: "><br><br><br>
+                            <input type="search" class="fechacreacion_campo" name="especialidad_campo" id="especialidad_campo" value="{{ $filtro_especialidad }}" placeholder="Especialista: "><br><br><br>
+                            <input type="search" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: "><br><br>
                         </div>
                     </div>
-            </div>
-            <div class="row">
-                <div class="column">
-                    <div class="form-group">
-                        <label class="estados">Categorias:</label><br>
-                        <select type="submit" id="select" name="select" class="select" value="{{ $filtro_select }}">	
-                            <option selected readonly value="">Seleccione una categoria</option>
-                            <option value="2">Medicos</option>
-                            <option value="3">Instituciones</option>
-                            <option value="4">Centro deportivo</option>
-                        </select>
+                    <div class="column">
+                        <div class="form-group">
+                            <label class="estados">Categorias:</label><br>
+                            <select type="submit" id="select" name="select" class="select" value="{{ $filtro_select }}">	
+                                <option selected readonly value="">Seleccione una categoria</option>
+                                <option value="2">Medicos</option>
+                                <option value="3">Instituciones</option>
+                                <option value="4">Centro deportivo</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <button type="submit" >Buscar</button><!-- Botón para buscar los componentes de la tabla-->
+                <input type="button" value="Seleccionar todo" class="btn btn-warning btn-sm" id="seleccionarTodo" onclick="toggleSeleccionTodos();"><br><br> <!--Scrip para el botón de seleccionar todos los campos en el checkbox-->
+                <button class="btn btn-warning btn-sm" id="boton_buscar" type="submit" >Buscar</button><!-- Botón para buscar los componentes de la tabla-->
                 <input type="hidden" name="seleccionados" id="seleccionados" value=""><!-- Campo oculto para almacenar los IDs de los elementos seleccionados -->
-                <input type="button" value="Seleccionar todo" class="btn btn-warning btn-sm" id="seleccionarTodo" onclick="toggleSeleccionTodos();"> <!--Scrip para el botón de seleccionar todos los campos en el checkbox-->
                 </form>
+            </div>
             </div><br><br>
+            <!--Tabla con sus respectivos componentes-->
             <form method="post" action="{{ route('exportar') }}" id="formDescargarExcel" onsubmit="return validarSeleccion();"><!-- Agrega una función de validación para exportar en JavaScript -->
                 @csrf
                 <!-- Aquí se guardan los datos filtrados para ser exportados -->
@@ -53,12 +54,11 @@
                 <input type="hidden" name="especialidad_campo" value="{{ $filtro_especialidad }}">
                 <input type="hidden" name="ciudad_campo" value="{{ $filtro_ciudad }}">
                 <input type="hidden" id="select" name="select" class="select" value="{{ $filtro_select }}"><br>
-                <!--Tabla con sus respectivos componentes-->
                 <div class="collapse show" id="collapseTable">
                     <div class="table-wrapper">
                         <table class="table-light" id="tabla">
                             <thead>
-                                <tr >
+                                <tr>
                                     <th scope="col">Seleccionar</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Especialidad</th>
@@ -79,12 +79,10 @@
                                     <td>{{ $dato->direccion }}</td>
                                     <td>{{ $dato->ciudad }}</td>
                                     <td>
-                                        <form id="actualizar_{{ $dato->id }}" method="post" action="{{ route('actualizar') }}">
+                                        <form id="actualizar_{{ $dato->id }}" method="POST" action="{{ route('actualizar') }}">
                                             @csrf
-                                            <!-- Agregamos un input hidden para enviar el ID del elemento a actualizar -->
-                                            <input type="hidden" name="actualizar_id" value="{{ $dato->id }}">
-                                            <!-- Botón para actualizar -->
-                                            <button type="submit" class="fa-solid fa-xmark btn-lg boton_melo" id="boton_melo" name="butons">actualizar</button>
+                                            <input type="hidden" name="actualizar_id" value="{{ $dato->id }}"><!-- Agregamos un input hidden para enviar el ID del elemento a actualizar -->
+                                            <button type="submit" class="fas fa-pencil-alt boton_melo " id="boton_melo" name="butons"></button><!-- Botón para actualizar -->
                                         </form>
                                     </td>
                                     <td>
@@ -93,7 +91,7 @@
                                             <!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
                                             <input type="hidden" name="eliminar_id" value="{{ $dato->id }}">
                                             <!-- Botón de eliminación -->
-                                            <button type="submit" class="fa-solid fa-xmark btn-lg boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons">Eliminar</button>
+                                            <button type="submit" class="fa-solid fa-trash boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons"></button>
                                         </form>
                                     </td>
                                 </tr>
