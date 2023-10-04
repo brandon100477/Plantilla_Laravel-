@@ -1,5 +1,5 @@
 @extends('all.welcome')
-@section('content')
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -8,28 +8,26 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-
+        <link rel="stylesheet" href="{{ asset('../../css/medicos.css')}}">
     </head>
-
-    <body class="antialiased">
-<!--     
-                <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{{auth()->user()->nombreApellido}}</b></a>
-                <a class="navbar-brand text-sm text-gray-700 dark:text-gray-500 underline">Bienvenid@ <b>{}</b></a>
--->
-        <form method="POST">
-
-            <div class="col-md-12">
-                <div class="card">
-                    <!--Boton para registrar un nuevo formulario.-->
-                    <a href="medicos/tipo-de-formulario" id="butons">Diligenciar Formulario</a>
+    <body>
+        @section('content')
+        <div class="contenedor">
+            <form method="POST">
+                <div class="col-md-12">
+                    <h4 id="h4">Tienes la facilidad de agregar uno más</h4>
+                    <div class="card">
+                        <!--Boton para registrar un nuevo formulario.-->
+                        <a href="medicos/tipo-de-formulario" id="butons">Agregar</a>
+                    </div><br><br><br><br>
+                    <h4 id="h4">Vea los registros que tiene</h4>
+                    <div class="card">
+                        <!--Boton para ver los registros hasta el momento.-->
+                        <a href="{{ route('registrados') }}" id="butons">Ver</a>
+                    </div>
                 </div>
-        <br><br><br><br>
-                <div class="card">
-                    <!--Boton para ver los registros hasta el momento.-->
-                    <a href="{{ route('registrados') }}" id="butons">Ver formularios registrados</a>
-                </div>
-            </div>
-        </form>
-@endsection
+            </form>
+        </div>    
+        @endsection
     </body>
 </html>

@@ -1,0 +1,44 @@
+ 
+body {
+    background-image: url('../../img/imagen.webp');
+    background-size: 100vw 100vh;
+    font-family: Arial, sans-serif;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+}
+
+
+#h4 {
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bolder;
+}
+
+
+#butons {
+    padding: 20px;
+    background: rgb(139, 7, 183);
+    color:white;
+    font-family: 'Arial';
+    font-size: 20px;
+    font-weight: 550;
+    text-align: center;
+    border-radius: 9px;
+    text-decoration-line: none;
+    
+}
+#butons:hover {
+    background: rgb(94, 5, 123);
+    cursor: pointer;
+    text-decoration: none;
+}
+.contenedor{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 150px;
+}

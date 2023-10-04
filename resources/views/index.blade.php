@@ -22,8 +22,7 @@
                     <div class="boton">
                         <!--login-->
                         <h1 name="inicio" id="inicio">Inicio de sesiòn</h1>
-                    </div>
-                    <br>
+                    </div><br>
                     <h3 name="usuario" id="usuario" class="textos_login">Usuario</h3>
                     <input type="text" class=" form-control @error('usuario') is-invalid @enderror" value="{{ old('usuario') }}" id="usuario" name="usuario" placeholder="Usuario" required>
                     @error('usuario')
@@ -31,8 +30,7 @@
                         {{ $message }}
                     </div>
                     @enderror
-                    <br>
-                    <br>
+                    <br><br>
                     <h3 name="contrasena" id="contrasena" class="textos_login">Contraseña</h3>
                     <input type="password" class="form-control @error('contrasena') is-invalid @enderror" name="contrasena" id="contrasena" placeholder="********" required>
                     @error('contrasena')
@@ -40,8 +38,7 @@
                         {{ $message }}
                     </div>
                     @enderror
-                    <br>
-                    <br>
+                    <br><br>
                     <div class="boton">
                         <button class="boton primary" type="submit">Iniciar sesión</button>
                     </div>

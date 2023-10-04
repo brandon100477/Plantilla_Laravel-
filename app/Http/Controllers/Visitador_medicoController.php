@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{formulario3, login_usuarios, sedes, usuario_sedes};
+use App\Models\{formulario3, login_usuarios};
 use Illuminate\Support\Facades\{Auth, hash};
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

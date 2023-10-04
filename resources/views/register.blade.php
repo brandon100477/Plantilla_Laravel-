@@ -22,8 +22,8 @@
                 <div class="boton">
                     <!--registro de datos a la db: Visitador_medico / tabla: login_usuarios-->
                     <h2 name="regis" id="regis" class="texto_inicio">Registrar usuarios</h2>
-                </div>
-                <br>
+                </div><br>
+
                 <h5 name="nombreApellido" id="nombreApellido"class="textos" >1. Nombre y apellido</h5>
                 <input type="text" class=" form-control @error('nombreApellido') is-invalid @enderror" value="{{ old('nombreApellido') }}" id="nombreApellido" name="nombreApellido" placeholder="Respuesta:" required>
                 <label for="nombreApellido"></label>
@@ -37,7 +37,7 @@
                 @error('usuario')
                 {{ $message }}
                 @enderror
-                
+
                 <h5 name="contrasena" id="contrasena"class="textos" >3. Contraseña</h5>
                 <input type="password" class=" form-control @error('contrasena') is-invalid @enderror" name="contrasena" id="contrasena" placeholder="*******" required>
                 <label for="contrasena"></label>
@@ -77,8 +77,7 @@
                 @error('tipoUsuario')
                 {{ $message }}
                 @enderror
-                <br>
-                <br>
+                <br><br>
 
                 <div class="boton">
                     <button class="btn-lg boton primary" type="submit" name="button1" id="button1">Registrarse</button>

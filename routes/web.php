@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{Visitador_medicoController, formularioController, viaticosController};
+use App\Http\Controllers\{Visitador_medicoController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Aquí se agregan las rutas correspondientes para hacer la conexión entre modelo-vista-controlador.
 |
 */
 
@@ -61,7 +59,6 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::post('/{id}','acceder')->name('acceder')->middleware('auth');
 });
 
-
 //master template
 Route::get('/master', function () { 
     return view('all.father');
@@ -86,8 +83,3 @@ Route::get('medicos/tipo-de-formulario', function () {
 Route::get('medicos/tipo-de-formulario', function () {
     return view('tipoFormulario');
 })->middleware('auth')->name('volver');
-
-
-
-
-
