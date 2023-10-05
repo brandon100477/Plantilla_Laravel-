@@ -1,4 +1,3 @@
- 
 body {
     background-image: url('../../img/imagen.webp');
     background-size: 100vw 100vh;
@@ -9,7 +8,6 @@ body {
     background-attachment: fixed;
 }
 
-
 #h4 {
     text-align: center;
     margin: 0;
@@ -17,7 +15,6 @@ body {
     margin-bottom: 20px;
     font-weight: bolder;
 }
-
 
 #butons {
     padding: 20px;
@@ -31,11 +28,13 @@ body {
     text-decoration-line: none;
     
 }
+
 #butons:hover {
     background: rgb(94, 5, 123);
     cursor: pointer;
     text-decoration: none;
 }
+
 .contenedor{
     justify-content: center;
     align-items: center;
