@@ -14,16 +14,15 @@
             <p class="texto_inicio">Actualizar información</p>
             <a href="{{ route('registrados')}}" class="volver" id="cerrar">Volver</a> <!--Se pone la Ruta 'registrados' para volver a la vista donde se filtran los registros-->
         </section>
-        <form method="POST" class="form_login" action="{{route('actualizado')}}">
+        <form method="POST" class="form_login" action="{{ route('actualizado', ['id' => $id]) }}">
             @csrf
-        <br>
-            <!-- fila 1 -->
-            <p class="titulos">Actualización de datos</p>
             <br>
+            <!-- fila 1 -->
+            <p class="titulos">Actualización de datos</p><br>
             <div class="row">
                 <div class="column">
                     <div class="form-group">
-                    <input type="hidden" id="id" name="id" value="{{ $id }}" class="input">
+                        <input type="hidden" id="id" name="id" value="{{ $id }}" class="input">
                         <label for="nombre">1. Nombre</label>
                         <input type="text" id="nombre" name="nombre" placeholder="{{ $nombre }}"class="input" value="{{ $nombre }}">
                     </div><br>
@@ -47,11 +46,10 @@
                     </div>
                 </div>
             </div><br>
-            
             <hr><br>
-            <p class="titulos">IPS donde trabaja</p><br>
 
             <!-- fila 2 -->
+            <p class="titulos">IPS donde trabaja</p><br>
             <div class="row">
                 <div class="column">
                     <div class="form-group">
@@ -75,9 +73,9 @@
                 </div><br>
             </div><br>
             <hr><br>
-            <p class="titulos">Preguntas de indagación - parte 1</p><br>
 
             <!-- fila 3 -->
+            <p class="titulos">Preguntas de indagación - parte 1</p><br>
             <div class="row">
                 <div class="column">
                     <div class="form-group">
@@ -128,9 +126,9 @@
                 </div><br>
             </div><br>
             <hr><br>
-            <p class="titulos">Preguntas de indagación - parte 2</p><br>
 
             <!-- fila 5 -->
+            <p class="titulos">Preguntas de indagación - parte 2</p><br>
             <div class="row">
                 <div class="column">
                     <div class="form-group">
@@ -157,8 +155,8 @@
                         <input type="text" placeholder="{{ $preg_indag11 }}" name="preg_indag11" for="nombre" style="resize: none;" class="c_preg1" rows="1" cols="50" value="{{ $preg_indag11 }}">
                     </div><br>
                 </div><br>
-            </div><br>
-            <br>
+            </div><br><br>
+
             <!-- fila 5 -->
             <div class="row">
                 <div class="column">
@@ -168,7 +166,7 @@
                     </div><br>
                 </div><br>
             </div><br>
-            <input type="submit" class="butons" name="butons" id="butons" value="Actualizar" />
+            <input type="submit" class="butons" name="butons" id="butons" value="Actualizar">
         </form>
     </body>
     <script>

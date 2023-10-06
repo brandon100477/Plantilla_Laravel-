@@ -21,9 +21,8 @@ body {
 
 
 .inicio{
-    width: 850px;
     background: rgb(94, 3, 124);
-    padding: 17px;
+    padding: 15px;
     margin: auto;
     margin-top: auto;
     font-family: 'Arial';
@@ -94,7 +93,7 @@ body {
 }
 
 .titulo{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 }
 
@@ -284,7 +283,7 @@ body {
  section.inicio {
     margin-top: 0px;
     max-width: 100%;
-    padding: 18px;
+    padding: 9px;
   }
 
   section .salir {

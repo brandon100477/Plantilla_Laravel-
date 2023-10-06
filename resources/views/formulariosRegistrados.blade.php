@@ -9,7 +9,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/6608247b8b.js" crossorigin="anonymous"></script>
         <title>Formularios Registrados</title>
-        
     </head>
     <body>
         <div class="heading">
@@ -20,8 +19,7 @@
             <div class="titulo1">
                 <label class="titulo_2">Filtrar formularios por:</label>
             </div><br><br>
-            <div class="row">
-                <form><!-- Formulario para hacer las respectivas busquedas -->
+            <form><!-- Formulario para hacer las respectivas busquedas -->
                     <div class="column">
                         <div class="form-group">
                             <input type="search" class="documento_campo" name="documento_campo" id="documento_campo" value="{{ $filtro_nombre }}" placeholder="Nombre del especialista: "><br><br><br>
@@ -29,6 +27,7 @@
                             <input type="search" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: "><br><br>
                         </div>
                     </div>
+            <div class="row">
                     <div class="column">
                         <div class="form-group">
                             <label class="estados">Categorias:</label><br>
@@ -78,20 +77,12 @@
                                     <td>{{ $dato->telefono }}</td>
                                     <td>{{ $dato->direccion }}</td>
                                     <td>{{ $dato->ciudad }}</td>
-                                    <td>
-                                        <form id="actualizar_{{ $dato->id }}" method="POST" action="{{ route('actualizar') }}">
-                                            @csrf
-                                            <input type="hidden" name="actualizar_id" value="{{ $dato->id }}"><!-- Agregamos un input hidden para enviar el ID del elemento a actualizar -->
-                                            <button type="submit" class="fas fa-pencil-alt boton_melo " id="boton_melo" name="butons"></button><!-- Botón para actualizar -->
-                                        </form>
-                                    </td>
+                                    <td><a href="{{ route('actualizar', ['id' => $dato->id]) }}" class="fas fa-pencil-alt boton_melo"></a></td>
                                     <td>
                                         <form id="eliminarForm_{{ $dato->id }}" method="post" action="{{ route('eliminar') }}">
                                             @csrf
-                                            <!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
-                                            <input type="hidden" name="eliminar_id" value="{{ $dato->id }}">
-                                            <!-- Botón de eliminación -->
-                                            <button type="submit" class="fa-solid fa-trash boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons"></button>
+                                            <input type="hidden" name="eliminar_id" value="{{ $dato->id }}"><!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
+                                            <button type="submit" class="fa-solid fa-trash boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons"></button><!-- Botón de eliminación -->
                                         </form>
                                     </td>
                                 </tr>

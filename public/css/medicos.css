@@ -1,11 +1,13 @@
 body {
-    background-image: url('../../img/imagen.webp');
-    background-size: 100vw 100vh;
-    font-family: Arial, sans-serif;
+    background-image: url('../../img/fondo.webp');
+    background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
     justify-content: center;
     align-items: center;
-    background-attachment: fixed;
+    margin: 0px 10px;
+    flex: 100%; 
 }
 
 #h4 {

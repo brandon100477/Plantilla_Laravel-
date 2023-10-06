@@ -44,12 +44,12 @@ Route::controller(Visitador_medicoController::class)->group(function(){
     Route::get('medicos/formularios-registrados', 'tabla')->name('registrados')->middleware('auth');
 
     //Ruta para actualizar los formularios registrados
-    Route::get('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
-    Route::post('medicos/formularios-registrados/Actualizar', 'tabla_actualizar')->name('actualizar')->middleware('auth');
+    Route::get('medicos/formularios-registrados/Actualizar/{id}', 'tabla_actualizar')->name('actualizar')->middleware('auth');
+    Route::post('medicos/formularios-registrados/Actualizar/{id}', 'tabla_actualizar')->name('actualizar')->middleware('auth');
 
     //Ruta para actualizar los datos de los registros
-    Route::get('medicos/formularios-registrados/Actualizar/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
-    Route::post('medicos/formularios-registrados/Actualizar/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
+    Route::get('medicos/formularios-registrados/Actualizar/{id}/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
+    Route::post('medicos/formularios-registrados/Actualizar/{id}/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
 
     //Ruta para exportar los excel's 
     Route::post('medicos/formularios-registrados/Exportar', 'exportar_excel')->name('exportar')->middleware('auth');

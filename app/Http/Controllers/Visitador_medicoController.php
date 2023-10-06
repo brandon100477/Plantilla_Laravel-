@@ -175,8 +175,7 @@ class Visitador_medicoController extends Controller
         return view('formulariosRegistrados', compact('datos', 'filtro_nombre', 'filtro_especialidad', 'filtro_ciudad', 'filtro_select'));
     }
     /* Procesos para actualizar los registros*/
-    public function tabla_actualizar(Request $request){
-        $id = $request->input('actualizar_id');
+    public function tabla_actualizar($id){
         $datos_actualizar = formulario3::where('id', $id)->where('sesion_usuario','=', auth()->user()->id)->get();
         foreach ($datos_actualizar as $dato) {
             $id= $dato->id;
@@ -206,7 +205,9 @@ class Visitador_medicoController extends Controller
     }
     /* Proceso para actualizar los datos y guardarlos en la DB */
     public function proceso_actualizar(Request $request){
+
         $id = $request->input('id');
+        
         $datos_actualizar = formulario3::findOrfail($id);
         $datos_actualizar->id= $id;
         $datos_actualizar->nombre = $request->input('nombre');
@@ -236,15 +237,33 @@ class Visitador_medicoController extends Controller
     /* Exportación de Excel */
     public function exportar_excel(Request $request)
     {
+        $filtro_nombre = $request->get('documento_campo');
+        $filtro_ciudad = $request->get('ciudad_campo');
+        $filtro_especialidad = $request->get('especialidad_campo');
+        $filtro_select = $request->get('select');
+        $sesion_usuario = auth()->user()->id;
         $idsSeleccionados = $request->input('seleccionados', []);// Obtiene los IDs de las filas seleccionadas
-        $datos = formulario3::orderBy('id', 'ASC')
-        ->where('nombre', 'like', '%' . $request->get('documento_campo') . '%')
-        ->where('ciudad', 'like', '%' . $request->get('ciudad_campo') . '%')
-        ->where('especialidad', 'like', '%' . $request->get('especialidad_campo') . '%')
-        ->where('categoria', 'like', '%' . $request->get('select') . '%')
-        ->where('sesion_usuario', '=', auth()->user()->id)
-        ->whereIn('id', $idsSeleccionados)
-        ->get();
+        $datos = formulario3::orderByRaw("CASE WHEN sesion_usuario = $sesion_usuario THEN 0 ELSE 1 END")
+                            ->orderBy('id', 'ASC')
+                            ->where(function ($query) use ($filtro_nombre) {
+                            if (!empty($filtro_nombre)) {
+                                $query->where('nombre', 'like', '%' . $filtro_nombre . '%');
+                            }})
+                            ->where(function ($query) use ($filtro_ciudad) {
+                                if (!empty($filtro_ciudad)) {
+                                    $query->where('ciudad', 'like', '%' . $filtro_ciudad . '%');
+                                }})
+                            ->where(function ($query) use ($filtro_especialidad) {
+                                if (!empty($filtro_especialidad)) {
+                                    $query->where('especialidad', 'like', '%' . $filtro_especialidad . '%');
+                                }})
+                            ->where(function ($query) use ($filtro_select) {
+                                if (!empty($filtro_select)) {
+                                    $query->where('categoria', 'like', '%' . $filtro_select . '%');
+                                }})
+                            ->where('sesion_usuario', $sesion_usuario)
+                            ->whereIn('id', $idsSeleccionados)
+                            ->get();
         {
         // Crea una nueva hoja de cálculo
         $spreadsheet = new Spreadsheet();
