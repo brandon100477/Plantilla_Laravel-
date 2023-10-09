@@ -360,8 +360,8 @@ class Visitador_medicoController extends Controller
     };
 }
     /* Proceso para eliminar los datos */
-    public function eliminar(Request $request){
-        $id = $request->input('eliminar_id');
+    public function eliminar(Request $request, $id){
+
         // Realiza la lógica de eliminación, por ejemplo:
         formulario3::where('id', $id)->delete();
         // Redirecciona de vuelta a la página anterior o a donde desees

@@ -53,7 +53,10 @@ Route::controller(Visitador_medicoController::class)->group(function(){
 
     //Ruta para exportar los excel's 
     Route::post('medicos/formularios-registrados/Exportar', 'exportar_excel')->name('exportar')->middleware('auth');
-    Route::post('medicos/formularios-registrados/Eliminar', 'eliminar')->name('eliminar')->middleware('auth');
+    
+    //Ruta para eliminar los datos de las tablas.
+    Route::post('medicos/formularios-registrados/Eliminar/{id}', 'eliminar')->name('eliminar')->middleware('auth');
+    Route::get('medicos/formularios-registrados/Eliminar/{id}', 'eliminar')->name('eliminar')->middleware('auth');
 
     //Ruta para acceder desde un administrador a otro medico
     Route::post('/{id}','acceder')->name('acceder')->middleware('auth');

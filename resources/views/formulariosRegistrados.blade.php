@@ -19,6 +19,8 @@
             <div class="titulo1">
                 <label class="titulo_2">Filtrar formularios por:</label>
             </div><br><br>
+            <div class="row">
+                    <div class="column">
             <form><!-- Formulario para hacer las respectivas busquedas -->
                     <div class="column">
                         <div class="form-group">
@@ -27,8 +29,7 @@
                             <input type="search" class="fechacreacion_campo" name="ciudad_campo" id="ciudad_campo" value="{{ $filtro_ciudad }}" placeholder="Ciudad: "><br><br>
                         </div>
                     </div>
-            <div class="row">
-                    <div class="column">
+            
                         <div class="form-group">
                             <label class="estados">Categorias:</label><br>
                             <select type="submit" id="select" name="select" class="select" value="{{ $filtro_select }}">	
@@ -78,13 +79,9 @@
                                     <td>{{ $dato->direccion }}</td>
                                     <td>{{ $dato->ciudad }}</td>
                                     <td><a href="{{ route('actualizar', ['id' => $dato->id]) }}" class="fas fa-pencil-alt boton_melo"></a></td>
+                                
                                     <td>
-                                        <form id="eliminarForm_{{ $dato->id }}" method="post" action="{{ route('eliminar') }}">
-                                            @csrf
-                                            <input type="hidden" name="eliminar_id" value="{{ $dato->id }}"><!-- Agregamos un input hidden para enviar el ID del elemento a eliminar -->
-                                            <button type="submit" class="fa-solid fa-trash boton-eliminar" data-id="{{ $dato->id }}" id="boton_borrar" name="butons"></button><!-- Botón de eliminación -->
-                                        </form>
-                                    </td>
+                                    <a href="javascript:void(0);" class="fa-solid fa-trash borrar" onclick="mostrarAlertaEliminar('{{ $dato->id }}');"></a></td> <!-- Se envía al JS para mostrar la confirmación de eliminación -->
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -98,8 +95,8 @@
         </section>
     </body>
     <script>
-        async function mostrarAlertaEliminar(id) {/* Función para alerta de eliminar registro */
-            const result = await Swal.fire({
+                function mostrarAlertaEliminar(id) {
+            Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'No podrás revertir esto.',
                 icon: 'warning',
@@ -107,33 +104,18 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sí, Bórralo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        '¡Borrado!',
+                        'El registro ha sido eliminado',
+                        'success'
+                    );
+                    // Si el usuario confirmó la eliminación, redirige al controlador de eliminación en 1,5 segundos
+                    setTimeout(function () { window.location.href = `{{ url('medicos/formularios-registrados/Eliminar/') }}/${id}`; }, 1500);
+                }
             });
-            if (result.isConfirmed) {
-                Swal.fire(
-                    '¡Borrado!',
-                    'El registro ha sido eliminado',
-                    'success'
-                )
-                // El usuario confirmó la eliminación, realiza la acción aquí
-                const form = document.getElementById(`eliminarForm_${id}`);
-                setTimeout(function () {form.submit(); }, 1400);
-            }
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            form.addEventListener("submit", async function (event) {
-                await mostrarAlerta(); // Muestra la alerta y espera a que se cierre
-                form.submit(); // Envía el formulario después de mostrar la alerta
-            });
-            const botonesEliminar = document.querySelectorAll(".boton-eliminar"); // Agregar un evento click a los botones de eliminar en cada fila de la tabla
-            botonesEliminar.forEach(boton => {
-                boton.addEventListener("click", function (event) {
-                    event.preventDefault(); // Evita que el enlace o botón haga su acción predeterminada
-                    const id = boton.dataset.id; // Obtén el ID del botón de eliminar
-                    mostrarAlertaEliminar(id); // Muestra la alerta de confirmación
-                });
-            });
-        });
         function toggleSeleccionTodos() {/* Función para el botón "seleccionar todos" para checkbox */
             const checkboxes = document.querySelectorAll('.checkbox');
             const seleccionarTodo = document.getElementById('seleccionarTodo');

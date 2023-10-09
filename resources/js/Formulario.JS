@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return; // Evita el envío del formulario
         } else { 
             mostrarAlerta(); // Llama a la función de la alerta
-            setTimeout(function () { errorMessage.textContent = ""; form.submit(); }, 1500); // Retrasa el envío del formulario por 1 segundo
+            setTimeout(function () { errorMessage.textContent = ""; form.submit(); }, 1500); // Retrasa el envío del formulario por 1,5 segundos
         }
     });
 });

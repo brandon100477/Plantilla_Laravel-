@@ -95,6 +95,7 @@ table{
     width: auto;
 	overflow: auto; /* habilitar el scroll */
 	max-height: 450px; /* Ajusta la altura máxima */
+    align-items: center;
 }	
 
 .titulos{
@@ -108,9 +109,10 @@ table{
 #collapseTable{
     border: 1px solid rgba(0, 0, 0, 0.451);
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.433);
-    margin: center;
+    margin: 70px;
     border-radius: 5px;
     flex: 100%;
+
 }
 
 .checkbox {
@@ -119,9 +121,10 @@ table{
 }
 
 .table-wrapper{
-    max-height: 500px;
+    max-height: auto;
     overflow-y: scroll;
     margin: 10px;
+    max-height: 500px;
 }
 
 table th{
@@ -133,6 +136,10 @@ table th{
     color: rgb(252, 252, 252);
     flex: 100%;
     max-width: 100%;
+    margin: auto 0 auto -10px;
+    padding-left: 20px;
+    width: 10%;
+    max-height: 100%
 }
 
 table td{
@@ -142,7 +149,7 @@ table td{
 	word-wrap: break-word;
 }
 
-#boton_borrar {
+.borrar{
     padding: 5px;
     font-size: 20px;
     background-color: transparent;
@@ -191,13 +198,18 @@ input {
 .row {
     align-items: center;
     flex-wrap: wrap;
-    margin: 0px 500px;
+    margin: 0px 600px;
     flex: 100%;
     max-width: 100%;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1500px) {
     .row {
-        margin: 0px 30px;
+        margin: 0px 300px;
+}
+}
+@media screen and (max-width: 1000px) {
+    .row {
+        margin: 0px 50px;
 }
 }
 
@@ -239,3 +251,12 @@ input {
     box-sizing: border-box;
 }
 /*fin columnas */
+
+@media screen and (max-width: 600px) {
+    .row {
+        margin: 0px 30px;
+}
+#collapseTable {
+    margin: auto;
+} 
+}
