@@ -13,7 +13,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link src="{{ asset('js/Formulario.js')}}">
-        @vite(['resources/js/Formulario.js'])
+        @vite(['resources/js/Formulario.JS'])
         <title>{{ $contenido }}</title>
 
     </head>

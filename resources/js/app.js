@@ -1,3 +1,3 @@
 import './bootstrap';
-import './formulariosRegistrados';
+import './Formulario.JS';
 window.Swal = require('sweetalert2');
