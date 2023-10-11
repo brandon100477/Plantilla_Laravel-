@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\{Visitador_medicoController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,34 +8,81 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Aquí se agregan las rutas correspondientes para hacer la conexión entre modelo-vista-controlador.
 |
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+    return view('index');
+});
 
-// Login
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
+Route::controller(Visitador_medicoController::class)->group(function(){
 
-// Register
-Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+    // inicio de sesión
+    Route::get('/login', 'login')->name('auth.authenticate');
+    Route::post('/login', 'authenticate')->name('login');
 
-// Logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    //Inicio de sesión de administrador
+    Route::get('/administrar', 'adminAuth')->middleware('auth.admin') ->name('admin.admin'); //Metodo que ayuda a restringir esta vista. "si no se ha autenticado, no podrá ingresar"
+
+    // Registro
+    Route::get('/register', 'register')->name('auth.register'); //GET:Se envian los datos por URL
+    Route::post('/register', 'login_usuarios')->name('auth.login_usuarios'); //POST:Se envían los datos de forma oculta
+
+    // cierre de sesión
+    Route::post('/logout', 'logout')->name('auth.logout')->middleware('auth');
+
+    //Ruta para el formulario de Doctores
+    Route::post('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion')->middleware('auth');
+    Route::get('medicos/tipo-de-formulario/Doctores','clasificacionformulario')->name('clasificacion')->middleware('auth');
+
+    //Ruta para insertar los datos al formulario.
+    Route::post('medicos/tipo-de-formulario','formulario3')->name('insertar')->middleware('auth');
+    Route::get('medicos/tipo-de-formulario','formulario3')->name('insertar')->middleware('auth');
+
+    //Ruta para ver los formularios registrados
+    Route::get('medicos/formularios-registrados', 'tabla')->name('registrados')->middleware('auth');
+
+    //Ruta para actualizar los formularios registrados
+    Route::get('medicos/formularios-registrados/Actualizar/{id}', 'tabla_actualizar')->name('actualizar')->middleware('auth');
+    Route::post('medicos/formularios-registrados/Actualizar/{id}', 'tabla_actualizar')->name('actualizar')->middleware('auth');
+
+    //Ruta para actualizar los datos de los registros
+    Route::get('medicos/formularios-registrados/Actualizar/{id}/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
+    Route::post('medicos/formularios-registrados/Actualizar/{id}/Actualizado', 'proceso_actualizar')->name('actualizado')->middleware('auth');
+
+    //Ruta para exportar los excel's 
+    Route::post('medicos/formularios-registrados/Exportar', 'exportar_excel')->name('exportar')->middleware('auth');
+    
+    //Ruta para eliminar los datos de las tablas.
+    Route::post('medicos/formularios-registrados/Eliminar/{id}', 'eliminar')->name('eliminar')->middleware('auth');
+    Route::get('medicos/formularios-registrados/Eliminar/{id}', 'eliminar')->name('eliminar')->middleware('auth');
+
+    //Ruta para acceder desde un administrador a otro medico
+    Route::post('/{id}','acceder')->name('acceder')->middleware('auth');
+});
 
 //master template
-Route::get('/master', function () {
+Route::get('/master', function () { 
     return view('all.father');
 });
 
-//central
-Route::get('/welcome', function () {
-    return view('central');
-});
+//Rutas para los medicos:
+Route::get('/medicos', function () {
+    return view('medicos');
+})->middleware('auth');
 
+//Ruta para regresar a la vista de medicos:
+Route::get('/medicos', function () {
+    return view('medicos');
+})->middleware('auth')->name('volver1');
+
+//Ruta para Diligenciar formulario
+Route::get('medicos/tipo-de-formulario', function () {
+    return view('tipoFormulario');
+})->middleware('auth');
+
+//Ruta para regresar a la vista de tipo de formulario (doctores - instituciones - centro deportivo):
+Route::get('medicos/tipo-de-formulario', function () {
+    return view('tipoFormulario');
+})->middleware('auth')->name('volver');
