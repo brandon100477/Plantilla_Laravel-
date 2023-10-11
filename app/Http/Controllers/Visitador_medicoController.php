@@ -141,6 +141,7 @@ class Visitador_medicoController extends Controller
         $agregar -> preg_indag12 = $request -> preg_indag12;
         $agregar -> sesion_usuario = $id;
         $agregar -> categoria = $request ->categoria;
+        $agregar->observaciones = $request ->observaciones;
         $agregar -> save();
         return view('tipoFormulario');
     }
@@ -289,8 +290,9 @@ class Visitador_medicoController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('S1', '¿Durante este mes ha tenido alguna situación desafortunada con algún paciente que haya tomado nuestros servicios?');
         $spreadsheet->getActiveSheet()->setCellValue('T1', '¿Conoce alguna Tecnica que podemos innovar?');
         $spreadsheet->getActiveSheet()->setCellValue('U1', '¿En Imagenologia que capacitación quisiera tener?');
-        $spreadsheet->getActiveSheet()->setCellValue('V1', 'Categoría');
-        $spreadsheet->getActiveSheet()->setCellValue('W1', 'Id del visitador - 45 (Laura) / 46 (Walter)');
+        $spreadsheet->getActiveSheet()->setCellValue('V1', 'Observaciones del paciente');
+        $spreadsheet->getActiveSheet()->setCellValue('W1', 'Categoría');
+        $spreadsheet->getActiveSheet()->setCellValue('X1', 'Id del visitador - 45 (Laura) / 46 (Walter)');
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(28);
@@ -312,13 +314,14 @@ class Visitador_medicoController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('S')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(40);
-        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(40);
         $spreadsheet->getActiveSheet()->getColumnDimension('W')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('X')->setWidth(12);
 
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
-        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getFont()->setBold(true); // Negrita
-        $spreadsheet->getActiveSheet()->getStyle('A1:W1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
+        $spreadsheet->getActiveSheet()->getStyle('A1:X1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER); // Centrar los encabezados
+        $spreadsheet->getActiveSheet()->getStyle('A1:X1')->getFont()->setBold(true); // Negrita
+        $spreadsheet->getActiveSheet()->getStyle('A1:X1')->getFont()->setSize(15); $i=2; // Tamaño personalizado
         // Recorre los datos y los escribe en la hoja de cálculo
         foreach ($datos as $dato) {
             $spreadsheet->getActiveSheet()->setCellValue('A' . $i, $dato->nombre);
@@ -342,8 +345,9 @@ class Visitador_medicoController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('S' . $i, $dato->preg_indag10);
             $spreadsheet->getActiveSheet()->setCellValue('T' . $i, $dato->preg_indag11);
             $spreadsheet->getActiveSheet()->setCellValue('U' . $i, $dato->preg_indag12);
-            $spreadsheet->getActiveSheet()->setCellValue('V' . $i, $dato->categoria);
-            $spreadsheet->getActiveSheet()->setCellValue('W' . $i, $dato->sesion_usuario);
+            $spreadsheet->getActiveSheet()->setCellValue('V' . $i, $dato->observaciones);
+            $spreadsheet->getActiveSheet()->setCellValue('W' . $i, $dato->categoria);
+            $spreadsheet->getActiveSheet()->setCellValue('X' . $i, $dato->sesion_usuario);
             $i++;
         }
         // Guarda el archivo Excel en un directorio temporal

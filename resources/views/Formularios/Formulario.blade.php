@@ -144,6 +144,9 @@
 
                     <label for="texto" class="textos">21. ¿En Imagenologia que capacitación quisiera tener?</label><br><br>
                         <textarea name="preg_indag12" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
+
+                    <label for="texto" class="textos">22. Observaciones</label><br><br>
+                        <textarea name="observaciones" style="resize: none;" class="campo_texto" rows="3" cols="50" placeholder="Escriba su respuesta"></textarea><br><br><br>
                     </div>
                 </div><br><br><br>
 
