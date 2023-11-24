@@ -1,23 +1,26 @@
 @extends('all.welcome')
 @section('content')
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{ asset('img/favicon.png')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/6608247b8b.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="{{ asset('css/admin.css')}}">
         <title>Formulario</title>
+        @vite(['resources/css/admin.css'])
     </head>
     <body class="antialiased">
         <form method="POST"><br><br>
-            <p class="bienvenido">Bienvenido al menú dedicado a administradores, a continuación se presenta una lista con los visitadores medicos registrados hasta la fecha:</p><br><br>
+            <p class="bienvenido">Bienvenido al menú dedicado a administradores, a continuación se presenta una lista con los visitadores medicos registrados hasta la fecha:</p><br>
             <div class="collapse show" id="collapseTable">
                 <div class="table-wrapper">
                     <table id="tabla">
-                        <thread>
+                        <thead>
                             <th>Nombre</th>
                             <th>Nombre de usuario</th>
                             <th>Cedula</th>

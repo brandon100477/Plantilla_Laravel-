@@ -3,12 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ asset('css/formulariosRegistrados.css')}}">
+
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/6608247b8b.js" crossorigin="anonymous"></script>
         <title>Formularios Registrados</title>
+        @vite(['resources/css/formulariosRegistrados.css'])
     </head>
     <body>
         <div class="heading">

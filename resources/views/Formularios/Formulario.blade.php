@@ -7,13 +7,11 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-        <link rel="stylesheet" href="{{ asset('css/Formulario.css')}}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/6608247b8b.js" crossorigin="anonymous"></script>
-
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link src="{{ asset('js/Formulario.js')}}">
-        @vite(['resources/js/Formulario.JS'])
+        @vite(['resources/js/Formulario.JS', 'resources/css/Formulario.css'])
         <title>{{ $contenido }}</title>
 
     </head>
@@ -38,7 +36,7 @@
                 </div>
 
                 <div class="accordion_content"><br>
-                <input type="hidden" class="campo_texto" name="categoria" id="categoria" value="{{ $number }}">
+                <input type="hidden" class="campo_texto" name="categoria" id="categoria" value="{{ $number }}"><br>
 
                 <label for="texto" class="textos">1. Nombre* </label><br><br>
                     <div id="error-message" style="color: red;"></div>

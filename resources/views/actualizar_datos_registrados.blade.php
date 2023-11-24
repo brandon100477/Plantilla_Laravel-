@@ -6,8 +6,8 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-        <link rel="stylesheet" href="{{ asset('css/actualizar_datos_registrados.css')}}">
         <title>Actualizar</title>
+        @vite(['resources/css/actualizar_datos_registrados.css'])
     </head>
     <body>
         <section class="inicio">

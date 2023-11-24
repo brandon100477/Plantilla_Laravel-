@@ -1,8 +1,7 @@
-
-/*body styles*/
-body{
-    background-image: url('../../img/fondo.webp');
+body {
+    background-image: url('../../public/img/fondo.webp');
     background-attachment: fixed;
+    margin: 0;
     background-size: cover;
     font-family: Arial, sans-serif;
 }
@@ -12,30 +11,40 @@ body{
     align-items: center;
     height: 95vh;
 }
-/*container button styles*/
-.boton{
+.textos_login {
+    font-size: large;
+}
+/* Estilo para el botón y su interacción */
+.boton {
+    border: none; 
+    color: black; 
+    padding: 15px;
+    cursor: pointer; 
+    border-radius: 5px;
+    font-size: large;
+    width: 100%;
+    margin-bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    
 }
-/*styles of the initial page form after login*/
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas por fila */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 10px;
     max-width: 600px;
     margin: 0 auto;
 }
-
 .form-label {
     font-weight: bold;
-    
 }
-
 .form-input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.primary {background-color: white; border: 2px solid rgb(104, 3, 124);} 
+.primary:hover {background: rgb(104, 3, 124); color: white;}

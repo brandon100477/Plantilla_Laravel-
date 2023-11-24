@@ -1,5 +1,5 @@
 body {
-    background-image: url('../../img/fondo.webp');
+    background-image: url('../../public/img/fondo.webp');
     background-size: cover;
     background-repeat: no-repeat; 
     background-attachment: fixed;
@@ -36,7 +36,7 @@ table{
     border: 1px solid black;
     background: rgba(255, 255, 255, 0.87);
     table-layout: fixed;
-    width: auto;
+    width: 100%;
 	overflow: auto; /* Habilitar el scroll */
 	max-height: 450px; /* Ajusta la altura máxima */
     align-items: center;
@@ -59,10 +59,13 @@ table{
     
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 780px) {
     #collapseTable {
         margin: auto;
-    } 
+    }
+    table{
+        width: auto;
+    }
 }
 
 table th{

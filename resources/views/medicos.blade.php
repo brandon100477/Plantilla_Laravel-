@@ -8,7 +8,7 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.png')}}">
-        <link rel="stylesheet" href="{{ asset('../../css/medicos.css')}}">
+        @vite(['resources/css/medicos.css'])
     </head>
     <body>
         @section('content')
