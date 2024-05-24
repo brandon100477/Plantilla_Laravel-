@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('sesion_usuario')->unsigned();
             $table->foreign('sesion_usuario')->references('id')->on('login_usuarios');
-            $table->string('name');
+            $table->string('nombre');
             $table->string('especialidad');
             $table->string('telefono');
             $table->string('direccion');

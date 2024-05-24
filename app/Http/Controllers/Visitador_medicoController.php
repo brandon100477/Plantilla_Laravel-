@@ -279,9 +279,14 @@ class Visitador_medicoController extends Controller
                             ->where('sesion_usuario', $sesion_usuario)
                             ->whereIn('id', $idsSeleccionados)
                             ->get();
-        {
-        // Crea una nueva hoja de cálculo
-        $spreadsheet = new Spreadsheet();
+        $tempPath = $this->generarExcel($datos);
+        return response()->download($tempPath, 'registro.xlsx')->deleteFileAfterSend(true);
+    }
+
+
+public function generarExcel($datos)
+{
+    $spreadsheet = new Spreadsheet();
         // Agrega los encabezados de las columnas y estilos
         $spreadsheet->getActiveSheet()->setCellValue('A1', 'Nombre');
         $spreadsheet->getActiveSheet()->setCellValue('B1', 'Especialidad');
@@ -367,16 +372,21 @@ class Visitador_medicoController extends Controller
         // Guarda el archivo Excel en un directorio temporal
         $writer = new Xlsx($spreadsheet);
         $tempPath = tempnam(sys_get_temp_dir(), 'registro_');
+
         $writer->save($tempPath);
         // Envía el archivo Excel al navegador
+
+        
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="registro.Xlsx"');
         header('Cache-Control: max-age=0');
         readfile($tempPath);
         // Elimina el archivo Excel temporal
+        var_dump($tempPath);
         unlink($tempPath);
-    };
+    return $tempPath;
 }
+
     /* Proceso para eliminar los datos */
     public function eliminar(Request $request, $id){
 

@@ -20,7 +20,7 @@
                         <!--Boton para registrar un nuevo formulario.-->
                         <a href="medicos/tipo-de-formulario" id="butons">Agregar</a>
                     </div><br><br><br><br>
-                    <h4 id="h4">Vea los registros que tiene</h4>
+                    <h4 id="h4">Ver registros que tiene</h4>
                     <div class="card">
                         <!--Boton para ver los registros hasta el momento.-->
                         <a href="{{ route('registrados') }}" id="butons">Ver</a>
