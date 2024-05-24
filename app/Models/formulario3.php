@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class formulario3 extends Model
 {   
-    protected $connection ="visitador_medico";
     protected $table ="formulario3"; //nombre de la tabla
     protected $primaryKey = "id"; //columna de la llave primaria
     

@@ -65,16 +65,30 @@ class Visitador_medicoController extends Controller
         return view('register');
     }
     public function login_usuarios(Request $request){
-        $registro = new login_usuarios();
-        $registro -> nombreApellido = $request -> nombreApellido;
-        $registro -> usuario = $request -> usuario;
-        $registro -> contrasena = bcrypt($request->contrasena); //Metodo para encriptar la contraseña por el metodo "Hash"
-        $registro -> cedula = $request -> cedula;
-        $registro -> telefono = $request -> telefono;
-        $registro -> correo = $request -> correo;
-        $registro -> tipoUsuario = $request -> tipoUsuario;
-        $registro ->save(); //Guarda todo el registro.
-        return redirect('/medicos');
+        $validatedData = $request->validate([
+            'nombreApellido' => 'required|max:255',
+            'usuario' => 'required',
+            'contrasena' => 'required|min:4',
+            'cedula' => 'required',
+            'telefono' => 'required',
+            'correo' => 'required|email',
+            'tipoUsuario' => 'required',
+        ]);
+        try{
+            $registro = new login_usuarios();
+            $registro->nombreApellido = $validatedData['nombreApellido'];
+            $registro->usuario = $validatedData['usuario'];
+            $registro->contrasena = bcrypt($validatedData['contrasena']);
+            $registro->cedula = $validatedData['cedula'];
+            $registro->telefono = $validatedData['telefono'];
+            $registro->correo = $validatedData['correo'];
+            $registro->tipoUsuario = $validatedData['tipoUsuario'];
+            $registro ->save(); //Guarda todo el registro.
+            return redirect('/medicos');
+        }catch(\Exception $e){
+            return redirect()->back()->withErrors(['error' => 'Hubo un problema al registrar el usuario. Por favor, inténtalo de nuevo.'])->withInput();
+        }
+
         //Redirecciona a la pagina principal "Tener en cuenta que para entrar al principal, se debe iniciar primero sesión, por ende primero le pedira su respectivo logueo"
     }
     public function logout(Request $request)

@@ -12,7 +12,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 class login_usuarios extends Authenticatable
 {
-    protected $connection ="visitador_medico";
     protected $table ="login_usuarios"; //nombre de la tabla
     protected $primaryKey = "id"; //columna de la llave primaria
     
@@ -45,5 +44,12 @@ class login_usuarios extends Authenticatable
         'usuario_verified_at' => 'datetime',
         'contrasena' => 'hashed',
     ];
+    public function definition()
+    {
+        return [
+            'usuario' => $this->faker->unique()->userName,
+            'contrasena' => bcrypt('password'), // Asegúrate de usar contraseñas seguras en producción
+        ];
+    }
 }
 
